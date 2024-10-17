@@ -2,7 +2,7 @@ from langdetect import detect, DetectorFactory
 import re
 from nltk.corpus import words
 
-""" Down here is responsible for checking the possible nonesense the user will input."""
+
 # Checking if gibberish like asdsacaewefhj
 def is_nonsensical_input(user_input):
     DetectorFactory.seed = 0  # For consistent results

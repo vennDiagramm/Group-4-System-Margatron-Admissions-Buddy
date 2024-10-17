@@ -21,7 +21,6 @@ api_key = os.getenv('API_KEY')
 genai.configure(api_key=api_key)
 
 
-""" Down here is the logic needed to get the response of the bot"""
 # Extract data from a CSV file
 def extract_text_from_csv(csv_path):
     csv_content = ""
@@ -93,7 +92,6 @@ def handle_conversation(csv_path):
         st.session_state.messages.append({"role": "assistant", "content": result})
 
 
-""" Down here is responsible for running the program"""
 # function to handle GUI
 def main():
     # Streamlit set up
