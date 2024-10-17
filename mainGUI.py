@@ -39,6 +39,10 @@ def query_gemini_api(csv_path, user_input):
     else:
         response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
     
+    # Nonsense input check
+    if len(user_input) < 3 or not any(char.isalnum() for char in user_input):
+        return "I'm sorry, I didn't understand that. Could you please ask something else or clarify your question?"
+
     if "Not found" in response.text or "Unavailable" in response.text or not response.text.strip():
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
     
