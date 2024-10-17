@@ -65,11 +65,14 @@ def query_gemini_api(csv_path, user_input):
     if user_input in ["hi", "hello", "hey", "greetings"]:
         return "Hello! How can I assist you with admission information today?"
     # Nonsense input check 
-    elif is_mathematical_expression(user_input) or is_nonsensical_input(user_input):
+    elif is_mathematical_expression(user_input):
+        return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
+    elif is_nonsensical_input(user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     else:
         response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
     
+
     response = response.text
 
     if "Not found" in response or "Unavailable" in response or not response.strip():
