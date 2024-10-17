@@ -34,15 +34,13 @@ def query_gemini_api(csv_path, user_input):
     user_input = user_input.strip().lower()
     
     if user_input in ["hi", "hello", "hey", "greetings"]:
-        prompt = "Hello! How can I assist you with admission information today?"
-    else:
-        prompt = f"Give me an answer based on this data and the query: {user_input}", csv_content
+        response = model.generate_content("Hello! How can I assist you with admission information today?")
 
-    # Send the user query and the CSV content to the Gemini API for response
-    response = model.generate_content([prompt, csv_content])
+    else:
+        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
     
     if "Not found" in response.text or "Unavailable" in response.text or not response.text.strip():
-        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?"
+        response = model.generate_content("I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?") 
     
     return response.text  # Assuming the API returns the text in this field
 
