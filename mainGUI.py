@@ -34,6 +34,7 @@ def extract_text_from_csv(csv_path):
 
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
+    tone = "Respond in a formal and professional manner."
     csv_content = extract_text_from_csv(csv_path)
     
     model = genai.GenerativeModel("gemini-1.5-flash")
@@ -44,8 +45,8 @@ def query_gemini_api(csv_path, user_input):
         return "Hello! How can I assist you with admission information today?"
     
     # accepted quick phrases
-    elif user_input in ["payment methods", "admissions", "requirements", "tuition fees"]:
-        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}. Make it professional. Meaning don't act like you are reading it from a text", csv_content])
+    elif user_input in any["payment methods", "admissions", "requirements", "tuition fees"]:
+        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}. {tone}", csv_content])
 
     # Nonsense input check 
     elif nc.is_mathematical_expression(user_input):
@@ -54,7 +55,7 @@ def query_gemini_api(csv_path, user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     
     else:
-        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}. Make it professional. Meaning don't act like you are reading it from a text", csv_content])
+        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}. {tone}", csv_content])
     
 
     response = response.text
