@@ -34,7 +34,7 @@ def query_gemini_api(csv_path, user_input):
     if user_input.lower() in ["hi", "hello", "hey", "greetings"]:
         prompt = "Hello! How can I assist you with admission information today?"
     else:
-        prompt = f"Provide an answer based on this data and the query. Make it concise.: '{user_input}'. {csv_content}"
+        prompt = [f"Give me an answer based on this data and the query: {user_input}", csv_content]
 
     # Send the user query and the CSV content to the Gemini API for response
     response = model.generate_content([prompt, csv_content])
