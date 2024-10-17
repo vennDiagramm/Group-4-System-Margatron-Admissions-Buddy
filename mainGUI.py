@@ -34,6 +34,7 @@ def extract_text_from_csv(csv_path):
 
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
+    # gives out the tone the bot should respond
     tone = "Respond in a formal and professional manner and give out any links if needed."
     csv_content = extract_text_from_csv(csv_path)
     
@@ -45,6 +46,7 @@ def query_gemini_api(csv_path, user_input):
     greeting_keywords = ["hi", "hello", "hey", "greetings"]
     accepted_phrases = ["payment methods", "admissions", "requirements", "tuition fees"]
 
+    # if it is found
     if any(keyword in user_input for keyword in greeting_keywords):
         return "Hello! How can I assist you with admission information today?" 
     elif any(phrase in user_input for phrase in accepted_phrases):
@@ -59,7 +61,7 @@ def query_gemini_api(csv_path, user_input):
     else:
         response = model.generate_content([f"{tone} Give me an answer based on this data and the query: {user_input}", csv_content])
     
-
+    
     response = response.text
 
     if "Not found" in response or "Unavailable" in response or not response.strip():
