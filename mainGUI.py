@@ -45,7 +45,7 @@ def query_gemini_api(csv_path, user_input):
         return "Hello! How can I assist you with admission information today?"
     
     # accepted quick phrases
-    elif user_input in any["payment methods", "admissions", "requirements", "tuition fees"]:
+    elif user_input in ["payment methods", "admissions", "requirements", "tuition fees"]:
         response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}. {tone}", csv_content])
 
     # Nonsense input check 
