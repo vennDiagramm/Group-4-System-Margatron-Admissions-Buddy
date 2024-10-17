@@ -18,4 +18,6 @@ kita nyo yang .gitignore:
 change mo lang into the folder of ur environment. 
 In my case, AdBot.
 
-
+To run:
+strealit run file/path
+eg: streamlit run d:/AdmissionBot/admissionBot/main.py
