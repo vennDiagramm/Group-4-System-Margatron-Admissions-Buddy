@@ -1,9 +1,9 @@
+pagistart kay create mo new environment didto idagan
+
 pip install google-generativeai
 
 python 3.9+ daw dapat 
 python --version
-
-pagistart kay create mo new environment didto idagan
 
 (Irun ni before ang main.py) Powershell:
 $env:API_KEY = "AIzaSyCGbLiMDDcKDuCZz2tB4KzMRVUseZva_oI"
@@ -13,5 +13,9 @@ set API_KEY=AIzaSyCGbLiMDDcKDuCZz2tB4KzMRVUseZva_oI
 
 ani ka magrun
 python main.py
+
+kita nyo yang .gitignore:
+change mo lang into the folder of ur environment. 
+In my case, AdBot.
 
 
