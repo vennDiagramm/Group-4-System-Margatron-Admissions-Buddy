@@ -31,6 +31,7 @@ def extract_text_from_csv(csv_path):
             csv_content += ' '.join(row) + "\n"
     return csv_content
 
+# Checking if gibberish like asdsacaewefhj
 def is_nonsensical_input(user_input):
     # Check if the input consists of gibberish or random letters
     if re.match(r'^[a-z]+$', user_input) and len(user_input) > 5:
@@ -48,6 +49,11 @@ def is_nonsensical_input(user_input):
 
     return False
 
+# Checking if math ba siya
+def is_mathematical_expression(user_input):
+    # Check if the input is a mathematical expression
+    return re.match(r'^[\d\s\+\-\*\/\%\(\)]+$', user_input.strip()) is not None
+
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
     csv_content = extract_text_from_csv(csv_path)
@@ -58,13 +64,12 @@ def query_gemini_api(csv_path, user_input):
     
     if user_input in ["hi", "hello", "hey", "greetings"]:
         return "Hello! How can I assist you with admission information today?"
-
+    # Nonsense input check 
+    elif is_mathematical_expression(user_input) or is_nonsensical_input(user_input):
+        return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     else:
         response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
     
-    # Nonsense input check
-    if is_nonsensical_input(user_input):
-        return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
 
     if "Not found" in response.text or "Unavailable" in response.text or not response.text.strip():
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
