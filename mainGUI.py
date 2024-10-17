@@ -64,7 +64,7 @@ def query_gemini_api(csv_path, user_input):
     
     # Nonsense input check
     if is_nonsensical_input(user_input):
-        return "I'm sorry, that input seems nonsensical. Could you please ask something else or clarify your question?"
+        return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
 
     if "Not found" in response.text or "Unavailable" in response.text or not response.text.strip():
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
