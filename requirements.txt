@@ -1,5 +1,4 @@
 google-generativeai
 streamlit
 python-dotenv
-nltk.corpus
 nltk
