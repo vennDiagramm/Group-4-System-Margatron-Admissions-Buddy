@@ -5,8 +5,6 @@ from pathlib import Path
 import streamlit as st
 from dotenv import load_dotenv # comment out
 
-# upgrade pip when app starts
-os.system('pip install --upgrade pip')
 
 # load the API KEY
 load_dotenv()
