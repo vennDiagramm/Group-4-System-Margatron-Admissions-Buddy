@@ -8,11 +8,10 @@ import streamlit as st
 from dotenv import load_dotenv # comment out if diritso API_KEY from command line
 
 # to deal with nonesense
-import nltk
+from polyglot.detect import Detector
 import re
 from nltk.corpus import words
 
-nltk.download('words')
 
 # load the API KEY -- remove if command line
 load_dotenv()
@@ -33,25 +32,33 @@ def extract_text_from_csv(csv_path):
             csv_content += ' '.join(row) + "\n"
     return csv_content
 
+
 # Checking if gibberish like asdsacaewefhj
 def is_nonsensical_input(user_input):
+    # Load valid words from NLTK
+    valid_words = set(words.words())
+
+    # Language Detection -- combatting bisaya haha
+    detector = Detector(user_input)
+    if detector.language.code != 'en':
+        return False  # Return False if the input is not in English
+
     # Check if the input consists of gibberish or random letters
     if re.match(r'^[a-z]+$', user_input) and len(user_input) > 5:
         return True
 
-    # Check if the input contains too many consecutive consonants or vowels
+    # Check for too many consecutive consonants or vowels
     if re.search(r'(?i)([bcdfghjklmnpqrstvwxyz]{4,}|[aeiou]{4,})', user_input):
         return True
 
-    # Check if the input is not in the dictionary of valid words
-    valid_words = set(words.words())  # Load valid words
-    input_words = user_input.split()  # Split input into words
+    # Split input into words
+    input_words = user_input.split()
 
     # Check if all words are not in valid words
     if all(word not in valid_words for word in input_words):
         return True
 
-    return False
+    return False  # Return True only if none of the checks indicate nonsense
 
 
 # Checking if math ba siya
