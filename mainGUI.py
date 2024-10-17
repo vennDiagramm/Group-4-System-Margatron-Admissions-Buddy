@@ -2,11 +2,17 @@ import csv
 import google.generativeai as genai
 import os
 from pathlib import Path
+
+# to deal with gui and secret keys
 import streamlit as st
-from dotenv import load_dotenv # comment out
+from dotenv import load_dotenv # comment out if diritso API_KEY from command line
+
+# to deal with nonesense
+import re
+from nltk.corpus import words
 
 
-# load the API KEY
+# load the API KEY -- remove if command line
 load_dotenv()
 
 # Access the API_KEY environment variable
@@ -25,6 +31,23 @@ def extract_text_from_csv(csv_path):
             csv_content += ' '.join(row) + "\n"
     return csv_content
 
+def is_nonsensical_input(user_input):
+    # Check if the input consists of gibberish or random letters
+    if re.match(r'^[a-z]+$', user_input) and len(user_input) > 5:
+        return True
+
+    # Check if the input contains too many consecutive consonants or vowels
+    if re.search(r'(?i)([bcdfghjklmnpqrstvwxyz]{4,}|[aeiou]{4,})', user_input):
+        return True
+
+    # Check if the input is not in the dictionary of valid words
+    valid_words = set(words.words())  # Load valid words
+    input_words = user_input.split()
+    if all(word not in valid_words for word in input_words):
+        return True
+
+    return False
+
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
     csv_content = extract_text_from_csv(csv_path)
@@ -40,8 +63,8 @@ def query_gemini_api(csv_path, user_input):
         response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
     
     # Nonsense input check
-    if len(user_input) < 3 or not any(char.isalnum() for char in user_input):
-        return "I'm sorry, I didn't understand that. Could you please ask something else or clarify your question?"
+    if is_nonsensical_input(user_input):
+        return "I'm sorry, that input seems nonsensical. Could you please ask something else or clarify your question?"
 
     if "Not found" in response.text or "Unavailable" in response.text or not response.text.strip():
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
@@ -59,22 +82,22 @@ def handle_conversation(csv_path):
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    # Capture user input
+    # Capture user input -- mao kibali ni asa dapit mag chat c user. mao sab ni mo appear sa chatbox
     user_input = st.chat_input("Ask questions regarding admissions. Please be specific...")
 
     if user_input:
         # Add user message to chat history
-        st.session_state.messages.append({"role": "user", "content": user_input})
+        st.session_state.messages.append({"role": "user", "content": user_input}) 
 
         # Display user message in chat message container
-        with st.chat_message("user"):
+        with st.chat_message("user"): # we can change this. this is the icon for the human
             st.markdown(user_input)
 
         # Query the Gemini API with the user input
         result = query_gemini_api(csv_path, user_input)
 
         # Display assistant response in chat message container
-        with st.chat_message("assistant"):
+        with st.chat_message("assistant"): # icon for assistant
             st.markdown(result)
 
         # Add assistant response to chat history
@@ -84,7 +107,7 @@ def handle_conversation(csv_path):
 # function to handle GUI
 def main():
     # Streamlit set up
-    st.set_page_config(page_title="Margatron", page_icon="🤖")
+    st.set_page_config(page_title="Margatron", page_icon="🤖") # pwde nato e himo as mmcm logo
     st.title("Margatron, Admissions Buddy :books:")
     st.write("Hello, how may I help you?")
 
