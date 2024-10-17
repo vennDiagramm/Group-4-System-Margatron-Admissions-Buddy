@@ -1,6 +1,8 @@
 ## MAIN INFO ##
 pagistart kay create mo new environment didto idagan
 
+REPO NI NKO
+
 ## How to Create Environment :  Run sa Terminal##
 python -m venv nameofENV
 eg: python -m venv AdBot
