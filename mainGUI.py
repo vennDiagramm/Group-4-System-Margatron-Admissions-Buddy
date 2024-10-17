@@ -2,9 +2,17 @@ import csv
 import google.generativeai as genai
 import os
 from pathlib import Path
+import streamlit as st
+from dotenv import load_dotenv # comment out
+
+# load the API KEY
+load_dotenv()
+
+# Access the API_KEY environment variable
+api_key = os.getenv('API_KEY')
 
 # Configure the Gemini API using the API key from the environment variable
-genai.configure(api_key=os.environ["API_KEY"])
+genai.configure(api_key=api_key)
 
 # Extract data from a CSV file
 def extract_text_from_csv(csv_path):
@@ -22,37 +30,56 @@ def query_gemini_api(csv_path, user_input):
     
     model = genai.GenerativeModel("gemini-1.5-flash")
     
-    if user_input.lower() in ["hi", "hello", "hey", "greetings"]:
-        prompt = "Hello! How can I assist you with admission information today?"
-    else:
-        prompt = f"Provide an answer based on this data and the query. Make it concise.: '{user_input}'. {csv_content}"
-
-    # Send the user query and the CSV content to the Gemini API for response
-    response = model.generate_content([prompt, csv_content])
-    
-    if "Not found" in response.text or "Unavailable" in response.text or not response.text.strip():
-        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?"
-    
-    
+    # Send the CSV content and user query to the Gemini API for content generation
+    response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
     
     return response.text  # Assuming the API returns the text in this field
 
-# Handle conversation using CSV file content
+# Function to handle the conversation
 def handle_conversation(csv_path):
-    print("Hello, I am Margatron. How may I help you? (Type 'exit' to quit)")
+    # Initialize chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
 
-    while True:
-        user_input = input("You: ")
-        if user_input.lower() == "exit":
-            print("")
-            break
+    # Display chat messages from history on app rerun
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
-        # Pass the CSV content and user's query to the Gemini API
+    # Capture user input
+    user_input = st.chat_input("Ask questions regarding admissions. Please be specific...")
+
+    if user_input:
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": user_input})
+
+        # Display user message in chat message container
+        with st.chat_message("user"):
+            st.markdown(user_input)
+
+        # Query the Gemini API with the user input
         result = query_gemini_api(csv_path, user_input)
-        
-        print("Margatron: ", result)
 
-if __name__ == "__main__":
+        # Display assistant response in chat message container
+        with st.chat_message("assistant"):
+            st.markdown(result)
+
+        # Add assistant response to chat history
+        st.session_state.messages.append({"role": "assistant", "content": result})
+
+
+# function to handle GUI
+def main():
+    # Streamlit set up
+    st.set_page_config(page_title="Megatron", page_icon="🤖")
+    st.title("Megatron, Admissions Buddy :books:")
+    st.write("Hello, how may I help you?")
+
     # Provide the path to your CSV file here
-    csv_path = "scrapped_scholarship.csv"
+    csv_path = "scrapped_data1.csv"
     handle_conversation(csv_path)
+
+
+# to run main
+if __name__ == "__main__":
+    main()
