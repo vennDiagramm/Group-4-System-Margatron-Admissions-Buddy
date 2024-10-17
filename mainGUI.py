@@ -34,19 +34,21 @@ def extract_text_from_csv(csv_path):
 
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
-    tone = "Respond in a formal and professional manner."
+    tone = "Respond in a formal and professional manner. Give out any links if needed."
     csv_content = extract_text_from_csv(csv_path)
     
     model = genai.GenerativeModel("gemini-1.5-flash")
 
     user_input = user_input.strip().lower()
     
-    if user_input in ["hi", "hello", "hey", "greetings"]:
-        return "Hello! How can I assist you with admission information today?"
-    
-    # accepted quick phrases
-    elif user_input in ["payment methods", "admissions", "requirements", "tuition fees"]:
-        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}. {tone}", csv_content])
+    # keywords
+    greeting_keywords = ["hi", "hello", "hey", "greetings"]
+    accepted_phrases = ["payment methods", "admissions", "requirements", "tuition fees"]
+
+    if any(keyword in user_input for keyword in greeting_keywords):
+        return "Hello! How can I assist you with admission information today?" 
+    elif any(phrase in user_input for phrase in accepted_phrases):
+        response = model.generate_content([f"{tone} Give me an answer based on this data and the query: {user_input}", csv_content])
 
     # Nonsense input check 
     elif nc.is_mathematical_expression(user_input):
@@ -55,7 +57,7 @@ def query_gemini_api(csv_path, user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     
     else:
-        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}. {tone}", csv_content])
+        response = model.generate_content([f"{tone} Give me an answer based on this data and the query: {user_input}", csv_content])
     
 
     response = response.text
