@@ -2,9 +2,10 @@ import csv
 import google.generativeai as genai
 import os
 from pathlib import Path
+import streamlit as st
 
 # Configure the Gemini API using the API key from the environment variable
-genai.configure(api_key=os.environ["API_KEY"])
+genai.configure(api_key="AIzaSyCGbLiMDDcKDuCZz2tB4KzMRVUseZva_oI")
 
 # Extract data from a CSV file
 def extract_text_from_csv(csv_path):
@@ -27,21 +28,51 @@ def query_gemini_api(csv_path, user_input):
     
     return response.text  # Assuming the API returns the text in this field
 
-# Handle conversation using CSV file content
+# Function to handle the conversation
 def handle_conversation(csv_path):
-    print("Hello, how may I help you? (Type 'exit' to quit)")
+    # Initialize chat history
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
 
-    while True:
-        user_input = input("You: ")
-        if user_input.lower() == "exit":
-            break
+    # Display chat messages from history on app rerun
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
-        # Pass the CSV content and user's query to the Gemini API
+    # Capture user input
+    user_input = st.chat_input("Ask questions regarding admissions...")
+
+    if user_input:
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": user_input})
+
+        # Display user message in chat message container
+        with st.chat_message("user"):
+            st.markdown(user_input)
+
+        # Query the Gemini API with the user input
         result = query_gemini_api(csv_path, user_input)
-        
-        print("Bot: ", result)
 
-if __name__ == "__main__":
+        # Display assistant response in chat message container
+        with st.chat_message("assistant"):
+            st.markdown(result)
+
+        # Add assistant response to chat history
+        st.session_state.messages.append({"role": "assistant", "content": result})
+
+
+# function to handle GUI
+def main():
+    # Streamlit set up
+    st.set_page_config(page_title="Megatron", page_icon="🤖")
+    st.title("Megatron, Admissions Buddy :books:")
+    st.write("Hello, how may I help you?")
+
     # Provide the path to your CSV file here
     csv_path = "scrapped_data1.csv"
     handle_conversation(csv_path)
+
+
+# to run main
+if __name__ == "__main__":
+    main()
