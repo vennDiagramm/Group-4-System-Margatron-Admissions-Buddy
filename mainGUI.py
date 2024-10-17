@@ -68,14 +68,14 @@ def query_gemini_api(csv_path, user_input):
     elif is_mathematical_expression(user_input) or is_nonsensical_input(user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     else:
-        response = model.generate_content(user_input)
-
-    response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
+        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
+    
+    response = response.text
 
     if "Not found" in response.text or "Unavailable" in response.text or not response.text.strip():
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
     
-    return response.text  # Assuming the API returns the text in this field
+    return response  # Assuming the API returns the text in this field
 
 # Function to handle the conversation
 def handle_conversation(csv_path):
