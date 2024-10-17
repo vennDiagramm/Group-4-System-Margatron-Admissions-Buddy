@@ -45,7 +45,9 @@ def query_gemini_api(csv_path, user_input):
     
     # accepted quick phrases
     elif user_input in ["payment methods", "admissions", "requirements", "tuition fees"]:
-        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
+        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}. 
+                                           Make it professional. Meaning don't act like you are reading it from a text", 
+                                           csv_content])
 
     # Nonsense input check 
     elif nc.is_mathematical_expression(user_input):
@@ -54,7 +56,9 @@ def query_gemini_api(csv_path, user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     
     else:
-        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
+        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}.
+                                           Make it professional. Meaning don't act like you are reading it from a text",
+                                           csv_content])
     
 
     response = response.text
