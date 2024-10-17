@@ -30,8 +30,10 @@ def query_gemini_api(csv_path, user_input):
     csv_content = extract_text_from_csv(csv_path)
     
     model = genai.GenerativeModel("gemini-1.5-flash")
+
+    user_input = user_input.strip().lower()
     
-    if user_input.lower() in ["hi", "hello", "hey", "greetings"]:
+    if user_input in ["hi", "hello", "hey", "greetings"]:
         prompt = "Hello! How can I assist you with admission information today?"
     else:
         prompt = f"Give me an answer based on this data and the query: {user_input}", csv_content
