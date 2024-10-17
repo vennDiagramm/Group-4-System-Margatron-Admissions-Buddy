@@ -2,9 +2,13 @@ import csv
 import google.generativeai as genai
 import os
 from pathlib import Path
+from dotenv import load_dotenv # comment out
 
-# Configure the Gemini API using the API key from the environment variable
-genai.configure(api_key=os.environ["API_KEY"])
+# load the API KEY
+load_dotenv()
+
+# Access the API_KEY environment variable
+api_key = os.getenv('API_KEY')
 
 # Extract data from a CSV file
 def extract_text_from_csv(csv_path):
