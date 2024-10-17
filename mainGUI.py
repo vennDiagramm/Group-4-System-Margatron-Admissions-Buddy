@@ -8,9 +8,7 @@ import streamlit as st
 from dotenv import load_dotenv # comment out if diritso API_KEY from command line
 
 # to deal with nonesense
-from polyglot.detect import Detector
-import re
-from nltk.corpus import words
+import nonesenseChecking as nc
 
 
 # load the API KEY -- remove if command line
@@ -22,6 +20,8 @@ api_key = os.getenv('API_KEY')
 # Configure the Gemini API using the API key from the environment variable
 genai.configure(api_key=api_key)
 
+
+""" Down here is the logic needed to get the response of the bot"""
 # Extract data from a CSV file
 def extract_text_from_csv(csv_path):
     csv_content = ""
@@ -32,39 +32,6 @@ def extract_text_from_csv(csv_path):
             csv_content += ' '.join(row) + "\n"
     return csv_content
 
-
-# Checking if gibberish like asdsacaewefhj
-def is_nonsensical_input(user_input):
-    # Load valid words from NLTK
-    valid_words = set(words.words())
-
-    # Language Detection -- combatting bisaya haha
-    detector = Detector(user_input)
-    if detector.language.code != 'en':
-        return False  # Return False if the input is not in English
-
-    # Check if the input consists of gibberish or random letters
-    if re.match(r'^[a-z]+$', user_input) and len(user_input) > 5:
-        return True
-
-    # Check for too many consecutive consonants or vowels
-    if re.search(r'(?i)([bcdfghjklmnpqrstvwxyz]{4,}|[aeiou]{4,})', user_input):
-        return True
-
-    # Split input into words
-    input_words = user_input.split()
-
-    # Check if all words are not in valid words
-    if all(word not in valid_words for word in input_words):
-        return True
-
-    return False  # Return True only if none of the checks indicate nonsense
-
-
-# Checking if math ba siya
-def is_mathematical_expression(user_input):
-    # Check if the input is a mathematical expression
-    return re.match(r'^[\d\s\+\-\*\/\%\(\)]+$', user_input.strip()) is not None
 
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
@@ -77,9 +44,9 @@ def query_gemini_api(csv_path, user_input):
     if user_input in ["hi", "hello", "hey", "greetings"]:
         return "Hello! How can I assist you with admission information today?"
     # Nonsense input check 
-    elif is_mathematical_expression(user_input):
+    elif nc.is_mathematical_expression(user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
-    elif is_nonsensical_input(user_input):
+    elif nc.is_nonsensical_input(user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     else:
         response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
@@ -91,6 +58,7 @@ def query_gemini_api(csv_path, user_input):
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
     
     return response  # Assuming the API returns the text in this field
+
 
 # Function to handle the conversation
 def handle_conversation(csv_path):
@@ -125,6 +93,7 @@ def handle_conversation(csv_path):
         st.session_state.messages.append({"role": "assistant", "content": result})
 
 
+""" Down here is responsible for running the program"""
 # function to handle GUI
 def main():
     # Streamlit set up

@@ -2,4 +2,4 @@ google-generativeai
 streamlit
 python-dotenv
 nltk
-polyglot
+langdetect
