@@ -31,6 +31,25 @@ def extract_text_from_csv(csv_path):
             csv_content += ' '.join(row) + "\n"
     return csv_content
 
+# Checking if gibberish like asdsacaewefhj
+def is_nonsensical_input(user_input):
+    # Check if the input consists of gibberish or random letters
+    if re.match(r'^[a-z]+$', user_input) and len(user_input) > 5:
+        return True
+
+    # Check if the input contains too many consecutive consonants or vowels
+    if re.search(r'(?i)([bcdfghjklmnpqrstvwxyz]{4,}|[aeiou]{4,})', user_input):
+        return True
+
+    # Check if the input is not in the dictionary of valid words
+    valid_words = set(words.words())  # Load valid words
+    input_words = user_input.split()  # Split input into words
+
+    # Check if all words are not in valid words
+    if all(word not in valid_words for word in input_words):
+        return True
+
+    return False
 
 # Checking if math ba siya
 def is_mathematical_expression(user_input):
@@ -50,7 +69,8 @@ def query_gemini_api(csv_path, user_input):
     # Nonsense input check 
     elif is_mathematical_expression(user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
-
+    elif is_nonsensical_input(user_input):
+        return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     else:
         response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
     
