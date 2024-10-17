@@ -50,6 +50,8 @@ def is_nonsensical_input(user_input):
         return True
 
     return False
+
+
 # Checking if math ba siya
 def is_mathematical_expression(user_input):
     # Check if the input is a mathematical expression
