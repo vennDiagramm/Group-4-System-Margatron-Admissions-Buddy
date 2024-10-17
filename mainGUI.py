@@ -72,7 +72,7 @@ def query_gemini_api(csv_path, user_input):
     
     response = response.text
 
-    if "Not found" in response.text or "Unavailable" in response.text or not response.text.strip():
+    if "Not found" in response or "Unavailable" in response or not response.strip():
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
     
     return response  # Assuming the API returns the text in this field
