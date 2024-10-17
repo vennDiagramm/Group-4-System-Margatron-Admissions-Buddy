@@ -8,9 +8,11 @@ import streamlit as st
 from dotenv import load_dotenv # comment out if diritso API_KEY from command line
 
 # to deal with nonesense
+import nltk
 import re
 from nltk.corpus import words
 
+nltk.download('words')
 
 # load the API KEY -- remove if command line
 load_dotenv()
