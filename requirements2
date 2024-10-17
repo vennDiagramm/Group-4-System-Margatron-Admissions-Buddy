@@ -21,7 +21,7 @@ conda activate myenv
 
 
 ## Needed To DO in the terminal ##
-pip install google-generativeai streamlit python-dotenv polyglot nltk
+pip install google-generativeai streamlit python-dotenv langdetect nltk
 
 
 ## Version Needed ##
