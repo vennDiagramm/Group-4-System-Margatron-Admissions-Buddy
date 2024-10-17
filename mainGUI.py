@@ -34,7 +34,7 @@ def query_gemini_api(csv_path, user_input):
     user_input = user_input.strip().lower()
     
     if user_input in ["hi", "hello", "hey", "greetings"]:
-        response = model.generate_content("Hello! How can I assist you with admission information today?")
+        response = "Hello! How can I assist you with admission information today?"
 
     else:
         response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
