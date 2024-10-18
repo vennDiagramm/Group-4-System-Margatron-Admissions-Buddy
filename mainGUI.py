@@ -32,7 +32,7 @@ generation_config = {
 model = genai.GenerativeModel(
   model_name="gemini-1.5-flash",
   generation_config=generation_config,
-  system_instruction="You are an assistant. Talk in professional manner and give out any links if needed. Do not give away that you are reading from something something. ",
+  system_instruction="You are an assistant. Talk in professional manner and give out any links if needed. Do not say anything about reading from a text.",
 )
 
 # Extract data from a CSV file
