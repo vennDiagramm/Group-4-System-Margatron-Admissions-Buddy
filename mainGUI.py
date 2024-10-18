@@ -44,17 +44,17 @@ def query_gemini_api(csv_path, user_input):
     
     # keywords
     greeting_keywords = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo"]
-    accepted_phrases = ["payment methods", "admissions", "requirements", "tuition fees", "school year"]
+    accepted_phrases = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year"]
     goodbye_words = ["thank you", "goodbye", "farewell"]
 
     # if it is found
+    if any(phrase in user_input for phrase in accepted_phrases):
+        response = model.generate_content([f"Give me an answer based on this data and the query:  {user_input}", csv_content])
     if any(words in user_input for words in goodbye_words):
         return "You are very much welcome! I am glad I could help!"
     if any(keyword in user_input for keyword in greeting_keywords):
         return "Hello! How can I assist you with admission information today?" 
-    if any(phrase in user_input for phrase in accepted_phrases):
-        response = model.generate_content([f"Give me an answer based on this data and the query:  {user_input}", csv_content])
-        
+    
 
     # Nonsense input check 
     if (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
