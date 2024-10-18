@@ -21,6 +21,22 @@ api_key = os.getenv('API_KEY')
 genai.configure(api_key=api_key)
 
 
+# Create the model
+generation_config = {
+  "temperature": 0,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_output_tokens": 8192,
+  "response_mime_type": "text/plain",
+}
+
+model = genai.GenerativeModel(
+  model_name="gemini-1.5-flash",
+  generation_config=generation_config,
+  system_instruction="You are an assistant. Talk in professional manner and give out any links if needed. Do not give away that you are reading from something something. ",
+)
+
+
 # Extract data from a CSV file
 def extract_text_from_csv(csv_path):
     csv_content = ""
@@ -35,10 +51,10 @@ def extract_text_from_csv(csv_path):
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
     # gives out the tone the bot should respond
-    tone = "You are an assistant. Respond in a formal and professional manner and give out any links if needed."
+    tone = "Respond in a formal and professional manner and give out any links if needed."
     csv_content = extract_text_from_csv(csv_path)
     
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = model
 
     user_input = user_input.strip().lower()
     
