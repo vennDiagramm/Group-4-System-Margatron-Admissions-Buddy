@@ -70,9 +70,9 @@ def query_gemini_api(csv_path, user_input):
         return "You are very much welcome! I am glad I could help!"
 
     # Nonsense input check 
-    elif nc.is_mathematical_expression(user_input):
+    #elif nc.is_mathematical_expression(user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
-    elif nc.is_nonsensical_input(user_input):
+    #elif nc.is_nonsensical_input(user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     
     else:
