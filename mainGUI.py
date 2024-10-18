@@ -50,14 +50,14 @@ def query_gemini_api(csv_path, user_input):
     # if it is found
     if any(phrase in user_input.strip() for phrase in accepted_phrases):
         response = model.generate_content([f"Give me an answer based on this data and the query:  {user_input}", csv_content])
-    if any(words in user_input.strip() for words in goodbye_words):
+    elif any(words in user_input.strip() for words in goodbye_words):
         return "You are very much welcome! I am glad I could help!"
-    if any(keyword in user_input.strip() for keyword in greeting_keywords):
+    elif any(keyword in user_input.strip() for keyword in greeting_keywords):
         return "Hello! How can I assist you with admission information today?" 
     
 
     # Nonsense input check 
-    if (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
+    elif (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     
     else:
