@@ -64,11 +64,16 @@ def query_gemini_api(csv_path, user_input):
         response = model.generate_content([f"Give me an answer based on this data and the query:  {user_input}", csv_content])
     
     
-    response = response.text
+    
 
-    if "Not found" in response or "Unavailable" in response or not response.strip():
+    if any(word in response.text for word in ["text","found in text"]):
+        response = model.generate_content("Remove the what you said about the saying from the text.")
+
+    if "Not found" in response.text or "Unavailable" in response.text or not response.strip():
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
     
+    response = response.text
+
     return response
 
 
