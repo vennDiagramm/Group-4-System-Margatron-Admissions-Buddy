@@ -44,7 +44,7 @@ def query_gemini_api(csv_path, user_input):
     
     # keywords
     greeting_keywords = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo"]
-    accepted_phrases = ["payment methods", "admissions", "requirements", "tuition fees"]
+    accepted_phrases = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year"]
     goodbye_words = ["thank you", "goodbye", "farewell"]
 
     # if it is found
