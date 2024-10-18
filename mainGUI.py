@@ -44,7 +44,7 @@ def query_gemini_api(csv_path, user_input):
     
     # keywords
     greeting_keywords = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo"]
-    accepted_phrases = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year"]
+    accepted_phrases = ["enroll", "payment methods", "admissions", "requirements", "tuition fees", "school year"]
     goodbye_words = ["thank you", "goodbye", "farewell"]
 
     # if it is found
@@ -57,7 +57,7 @@ def query_gemini_api(csv_path, user_input):
         
 
     # Nonsense input check 
-    if (nc.is_mathematical_expression(user_input)) or(nc.is_nonsensical_input(user_input)):
+    if (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     
     else:
