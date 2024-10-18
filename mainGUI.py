@@ -49,7 +49,7 @@ def query_gemini_api(csv_path, user_input):
 
     # if it is found
     if any(phrase in user_input.strip() for phrase in accepted_phrases):
-        response = model.generate_content([f"Give me an answer based on this data and the query:  {user_input}", csv_content])
+        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query:  {user_input}", csv_content])
     elif any(words in user_input.strip() for words in goodbye_words):
         return "You are very much welcome! I am glad I could help!"
     elif any(keyword in user_input.strip() for keyword in greeting_keywords):
@@ -61,19 +61,14 @@ def query_gemini_api(csv_path, user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     
     else:
-        response = model.generate_content([f"Give me an answer based on this data and the query:  {user_input}", csv_content])
+        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query:  {user_input}", csv_content])
     
-    
-    
-
-    if any(word in response.text for word in ["text","found in text"]):
-        response = model.generate_content("Remove the what you said about the saying from the text.")
-
-    if "Not found" in response.text or "Unavailable" in response.text or not response.strip():
-        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
     
     response = response.text
 
+    if "Not found" in response or "Unavailable" in response or not response.strip():
+        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
+    
     return response
 
 
