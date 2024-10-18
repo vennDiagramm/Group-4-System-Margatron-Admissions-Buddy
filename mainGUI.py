@@ -48,11 +48,11 @@ def query_gemini_api(csv_path, user_input):
     goodbye_words = ["thank you", "goodbye", "farewell"]
 
     # if it is found
-    if any(phrase in user_input for phrase in accepted_phrases):
+    if any(phrase in user_input.strip() for phrase in accepted_phrases):
         response = model.generate_content([f"Give me an answer based on this data and the query:  {user_input}", csv_content])
-    if any(words in user_input for words in goodbye_words):
+    if any(words in user_input.strip() for words in goodbye_words):
         return "You are very much welcome! I am glad I could help!"
-    if any(keyword in user_input for keyword in greeting_keywords):
+    if any(keyword in user_input.strip() for keyword in greeting_keywords):
         return "Hello! How can I assist you with admission information today?" 
     
 
