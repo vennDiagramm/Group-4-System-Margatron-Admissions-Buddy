@@ -20,7 +20,6 @@ api_key = os.getenv('API_KEY')
 # Configure the Gemini API using the API key from the environment variable
 genai.configure(api_key=api_key)
 
-
 # Create the model
 generation_config = {
   "temperature": 0,
@@ -36,7 +35,6 @@ model = genai.GenerativeModel(
   system_instruction="You are an assistant. Talk in professional manner and give out any links if needed. Do not give away that you are reading from something something. ",
 )
 
-
 # Extract data from a CSV file
 def extract_text_from_csv(csv_path):
     csv_content = ""
@@ -51,10 +49,10 @@ def extract_text_from_csv(csv_path):
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
     # gives out the tone the bot should respond
-    tone = "Respond in a formal and professional manner and give out any links if needed."
+    # tone = "You are an assistant. Respond in a formal and professional manner and give out any links if needed."
     csv_content = extract_text_from_csv(csv_path)
     
-    model = model
+    # model = genai.GenerativeModel("gemini-1.5-flash")
 
     user_input = user_input.strip().lower()
     
@@ -67,7 +65,7 @@ def query_gemini_api(csv_path, user_input):
     if any(keyword in user_input for keyword in greeting_keywords):
         return "Hello! How can I assist you with admission information today?" 
     elif any(phrase in user_input for phrase in accepted_phrases):
-        response = model.generate_content([f"{tone} Give me an answer based on this data and the query: {user_input}", csv_content])
+        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
     elif any(words in user_input for words in goodbye_words):
         return "You are very much welcome! I am glad I could help!"
 
@@ -78,7 +76,7 @@ def query_gemini_api(csv_path, user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     
     else:
-        response = model.generate_content([f"{tone} Give me an answer based on this data and the query: {user_input}", csv_content])
+        response = model.generate_content([f"Give me an answer based on this data and the query: {user_input}", csv_content])
     
     
     response = response.text
