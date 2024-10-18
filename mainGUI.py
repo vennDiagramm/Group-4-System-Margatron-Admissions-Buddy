@@ -45,7 +45,7 @@ def query_gemini_api(csv_path, user_input):
     # keywords
     greeting_keywords = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo"]
     accepted_phrases = ["payment methods", "admissions", "requirements", "tuition fees"]
-    goodbye_keywords = ["thank you","goodbye","farewell"]
+    goodbye_keywords = ["thank you", "goodbye", "farewell"]
 
     # if it is found
     if any(keyword in user_input for keyword in greeting_keywords):
@@ -54,8 +54,6 @@ def query_gemini_api(csv_path, user_input):
         response = model.generate_content([f"{tone} Give me an answer based on this data and the query: {user_input}", csv_content])
     elif any(keyword in user_input for keyword in goodbye_keywords):
         return "You are very much welcome! I am glad I could help!"
-    elif any (words in user_input for words in ["What is the meaning of your existence"]):
-        response = model.generate_content(user_input)
 
     # Nonsense input check 
     elif nc.is_mathematical_expression(user_input):
