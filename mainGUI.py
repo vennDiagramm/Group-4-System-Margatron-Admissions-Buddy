@@ -35,7 +35,7 @@ def extract_text_from_csv(csv_path):
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
     # gives out the tone the bot should respond
-    tone = "Respond in a formal and professional manner and give out any links if needed."
+    tone = "You are an assistant. Respond in a formal and professional manner and give out any links if needed."
     csv_content = extract_text_from_csv(csv_path)
     
     model = genai.GenerativeModel("gemini-1.5-flash")
