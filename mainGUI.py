@@ -37,6 +37,13 @@ def extract_text_from_csv(csv_path):
             csv_content += ' '.join(row) + "\n"
     return csv_content
 
+def contains_keywords(user_input, keywords):
+    for keyword in keywords:
+        # Use regex to match keyword anywhere in the sentence
+        pattern = re.compile(r'\b' + re.escape(keyword) + r'\b', re.IGNORECASE)
+        if re.search(pattern, user_input):
+            return True
+    return False
 
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
@@ -75,14 +82,6 @@ def query_gemini_api(csv_path, user_input):
     
     return response
 
-
-def contains_keywords(user_input, keywords):
-    for keyword in keywords:
-        # Use regex to match keyword anywhere in the sentence
-        pattern = re.compile(r'\b' + re.escape(keyword) + r'\b', re.IGNORECASE)
-        if re.search(pattern, user_input):
-            return True
-    return False
 
 
 # Function to handle the conversation
