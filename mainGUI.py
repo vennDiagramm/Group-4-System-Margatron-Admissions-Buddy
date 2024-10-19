@@ -57,7 +57,7 @@ SCHOLARSHIPS_KEYWORDS = [
 COLLEGES_KEYWORDS = [
     "Alfonso T. Yuchengco College of Business", "College of Arts and Science",
     "College of Computer and Information Science", "College of Engineering and Architecture",
-    "College of Health Sciences", "colleges" "liberal arts",
+    "College of Health Sciences", "colleges", "liberal arts",
     "undergraduate programs", "top college schools in Davao City",
     "new college applicants", "transfer applicants",
     "1st Semester SY 2024-2025", "admission process",
@@ -124,7 +124,7 @@ def query_gemini_api(csv_path, user_input):
 
 
 # Function to handle the conversation
-def handle_conversation(csv_path):
+def handle_conversation():
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
@@ -134,25 +134,24 @@ def handle_conversation(csv_path):
         st.session_state.messages.append({"role": "user", "content": user_input})
         with st.chat_message("user"):
             st.markdown(user_input)
-        
+
+        # Determine which CSV file to use based on user input
+        csv_path = determine_csv_file(user_input)
+
         result = query_gemini_api(csv_path, user_input)
         with st.chat_message("assistant"):
             st.markdown(result)
 
         st.session_state.messages.append({"role": "assistant", "content": result})
 
-
-
 # function to handle GUI
 def main():
     # Streamlit set up
-    st.set_page_config(page_title="Margatron", page_icon="🤖") # pwde nato e himo as mmcm logo
+    st.set_page_config(page_title="Margatron", page_icon="🤖")
     st.title("Margatron, Admissions Buddy :books: Meow")
     st.write("Hello, how may I help you? Meow")
 
-    # Provide the path to your CSV file here
-    handle_conversation(csv_path)
-
+    handle_conversation()
 
 # to run main
 if __name__ == "__main__":
