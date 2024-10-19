@@ -20,7 +20,7 @@ load_dotenv()
 # Access the API_KEY environment variable
 api_key = os.getenv('API_KEY')
 
-# Configure the Gemini API using the API key from the environment variabl
+# Configure the Gemini API using the API key from the environment variablee
 genai.configure(api_key=api_key)
 
 
