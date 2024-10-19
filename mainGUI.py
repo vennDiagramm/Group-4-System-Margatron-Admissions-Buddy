@@ -114,7 +114,7 @@ def main():
     st.write("Hello, how may I help you?")
 
     # Provide the path to your CSV file here
-    csv_path = "scrapped_scholarship.csv"
+    csv_path = "scrapped_FAQs.csv"
     handle_conversation(csv_path)
 
 
