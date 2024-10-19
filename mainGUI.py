@@ -9,9 +9,7 @@ from dotenv import load_dotenv # comment out if diritso API_KEY from command lin
 
 # to deal with nonesense
 import nonesenseChecking as nc
-import spacy #asd
 
-nlp = spacy.load("en_core_web_sm")
 
 
 # load the API KEY -- remove if command line
@@ -38,10 +36,10 @@ def extract_text_from_csv(csv_path):
             csv_content += ' '.join(row) + "\n"
     return csv_content
 
-
 def contains_keywords(user_input, keywords):
-    user_doc = nlp(user_input.lower())
-    return any(token.text in keywords for token in user_doc)
+    user_words = set(user_input.lower().split())
+    return bool(user_words.intersection(keywords))
+
 
 
 # Use the Gemini API to generate a response based on the CSV content and user input
