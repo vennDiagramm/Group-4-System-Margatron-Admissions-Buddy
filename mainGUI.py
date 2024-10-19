@@ -9,8 +9,9 @@ from dotenv import load_dotenv # comment out if diritso API_KEY from command lin
 
 # to deal with nonesense
 import nonesenseChecking as nc
+import spacy
 
-
+nlp = spacy.load("en_core_web_sm")
 
 
 # load the API KEY -- remove if command line
@@ -24,7 +25,7 @@ genai.configure(api_key=api_key)
 
 
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo"]
-ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment"]
+ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 
 # Extract data from a CSV file
@@ -37,15 +38,11 @@ def extract_text_from_csv(csv_path):
             csv_content += ' '.join(row) + "\n"
     return csv_content
 
+
 def contains_keywords(user_input, keywords):
-    # Split user input into words
-    user_words = user_input.lower().split()
-    
-    # Check if any word in user input matches the accepted keywords
-    for word in user_words:
-        if word in keywords:
-            return True
-    return False
+    user_doc = nlp(user_input.lower())
+    return any(token.text in keywords for token in user_doc)
+
 
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
