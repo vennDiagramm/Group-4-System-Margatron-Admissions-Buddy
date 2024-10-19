@@ -95,7 +95,7 @@ def determine_csv_file(user_input):
         # Default to one of the files if no specific keywords are found
         return "scrapped_FAQs.csv"
 
- def query_gemini_api(csv_path, user_input):
+def query_gemini_api(csv_path, user_input):
     user_input = user_input.strip().lower()
     csv_content = extract_text_from_csv(csv_path)
 
