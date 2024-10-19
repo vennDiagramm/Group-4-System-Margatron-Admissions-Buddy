@@ -20,89 +20,75 @@ api_key = os.getenv('API_KEY')
 # Configure the Gemini API using the API key from the environment variable
 genai.configure(api_key=api_key)
 
+# Define constants
+TONE = "Respond in a formal and professional manner and give out any links if needed. Do not say anything about reading from a text."
+GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo"]
+ACCEPTED_PHRASES = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year"]
+GOODBYE_WORDS = ["thank you", "goodbye", "farewell"]
+
 
 # Extract data from a CSV file
 def extract_text_from_csv(csv_path):
-    csv_content = ""
-    with open(csv_path, 'r', newline='', encoding='utf-8') as file:
-        reader = csv.reader(file)
-        for row in reader:
-            # Convert each row to a string and append to the content
-            csv_content += ' '.join(row) + "\n"
-    return csv_content
+    try:
+        csv_content = ""
+        with open(csv_path, 'r', newline='', encoding='utf-8') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                csv_content += ' '.join(row) + "\n"
+        return csv_content
+    except FileNotFoundError:
+        st.error("CSV file not found. Please ensure the correct file path.")
+        return ""
+    except Exception as e:
+        st.error(f"An error occurred while reading the CSV file: {str(e)}")
+        return ""
 
-
-# Use the Gemini API to generate a response based on the CSV content and user input
+ # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
-    # gives out the tone the bot should respond
-    tone = "Respond in a formal and professional manner and give out any links if needed. Do not say anything about reading from a text."
+    user_input = user_input.strip().lower()
     csv_content = extract_text_from_csv(csv_path)
     
-    model = genai.GenerativeModel("gemini-1.5-flash")
-
-    user_input = user_input.strip().lower()
+    if not csv_content:
+        return "Error: CSV data could not be loaded."
     
-    # keywords
-    greeting_keywords = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo"]
-    accepted_phrases = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year"]
-    goodbye_words = ["thank you", "goodbye", "farewell"]
-
-    # if it is found
-    if any(phrase in user_input.strip() for phrase in accepted_phrases):
-        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query:  {user_input}", csv_content])
-    elif any(words in user_input.strip() for words in goodbye_words):
+    if any(phrase in user_input for phrase in ACCEPTED_PHRASES):
+        query = f"{TONE}. Give me an answer based on this data and the query: {user_input}"
+    elif any(word in user_input for word in GOODBYE_WORDS):
         return "You are very much welcome! I am glad I could help!"
-    elif any(keyword in user_input.strip() for keyword in greeting_keywords):
-        return "Hello! How can I assist you with admission information today?" 
-    
-
-    # Nonsense input check 
-    elif (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
+    elif any(keyword in user_input for keyword in GREETING_KEYWORDS):
+        return "Hello! How can I assist you with admission information today?"
+    elif nc.is_mathematical_expression(user_input) or nc.is_nonsensical_input(user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
-    
     else:
-        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query:  {user_input}", csv_content])
-    
-    
-    response = response.text
+        query = f"{TONE}. Give me an answer based on this data and the query: {user_input}"
+
+    response = model.generate_content([query, csv_content]).text
 
     if "Not found" in response or "Unavailable" in response or not response.strip():
-        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
+        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?"
     
     return response
 
 
+
 # Function to handle the conversation
 def handle_conversation(csv_path):
-    # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-    # Display chat messages from history on app rerun
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-    # Capture user input -- mao kibali ni asa dapit mag chat c user. mao sab ni mo appear sa chatbox
-    user_input = st.chat_input("Ask questions regarding admissions. Please be specific...")
+    user_input = st.chat_input("Ask specific questions about admissions, scholarships, and school requirements...")
 
     if user_input:
-        # Add user message to chat history
-        st.session_state.messages.append({"role": "user", "content": user_input}) 
-
-        # Display user message in chat message container
-        with st.chat_message("user"): # we can change this. this is the icon for the human
+        st.session_state.messages.append({"role": "user", "content": user_input})
+        with st.chat_message("user"):
             st.markdown(user_input)
-
-        # Query the Gemini API with the user input
+        
         result = query_gemini_api(csv_path, user_input)
-
-        # Display assistant response in chat message container
-        with st.chat_message("assistant"): # icon for assistant
+        with st.chat_message("assistant"):
             st.markdown(result)
 
-        # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "content": result})
+
 
 
 # function to handle GUI
