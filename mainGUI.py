@@ -95,14 +95,13 @@ def determine_csv_file(user_input):
         # Default to one of the files if no specific keywords are found
         return "scrapped_FAQs.csv"
 
- # Use the Gemini API to generate a response based on the CSV content and user input
-def query_gemini_api(csv_path, user_input):
+ def query_gemini_api(csv_path, user_input):
     user_input = user_input.strip().lower()
     csv_content = extract_text_from_csv(csv_path)
-    
+
     if not csv_content:
         return "Error: CSV data could not be loaded."
-    
+
     if any(phrase in user_input for phrase in ACCEPTED_PHRASES):
         query = f"{TONE}. Give me an answer based on this data and the query: {user_input}"
     elif any(word in user_input for word in GOODBYE_WORDS):
@@ -114,12 +113,14 @@ def query_gemini_api(csv_path, user_input):
     else:
         query = f"{TONE}. Give me an answer based on this data and the query: {user_input}"
 
-    response = model.generate_content([query, csv_content]).text
+    # Update this line to use the genai object
+    response = genai.generate_content([query, csv_content]).text
 
     if "Not found" in response or "Unavailable" in response or not response.strip():
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?"
-    
+
     return response
+
 
 
 
