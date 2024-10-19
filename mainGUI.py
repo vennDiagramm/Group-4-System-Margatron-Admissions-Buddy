@@ -37,13 +37,13 @@ def extract_text_from_csv(csv_path):
 # Function to choose the appropriate CSV file based on user input
 def select_csv_file(user_input):
     if "college" in user_input:
-        return "scrapped_college.csv"
+        return "admissionBot\scrapped_college.csv"
     elif "faq" in user_input or "question" in user_input:
-        return "scrapped_FAQs.csv"
+        return "admissionBot\scrapped_FAQs.csv"
     elif "scholarship" in user_input:
-        return "scrapped_scholarships.csv"
+        return "admissionBot\scrapped_scholarship.csv"
     else:
-        return "scrapped_FAQs.csv"
+        return "admissionBot\scrapped_FAQs.csv"
 
 
 # Use Gemini API to generate a response based on CSV content and user input
