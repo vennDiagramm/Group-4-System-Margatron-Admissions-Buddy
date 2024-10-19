@@ -9,8 +9,8 @@ from dotenv import load_dotenv # comment out if diritso API_KEY from command lin
 
 # to deal with nonesense
 import nonesenseChecking as nc
-# for more flexibility
-import re
+
+
 
 
 # load the API KEY -- remove if command line
@@ -38,10 +38,12 @@ def extract_text_from_csv(csv_path):
     return csv_content
 
 def contains_keywords(user_input, keywords):
-    for keyword in keywords:
-        # Use regex to match keyword anywhere in the sentence
-        pattern = re.compile(r'\b' + re.escape(keyword) + r'\b', re.IGNORECASE)
-        if re.search(pattern, user_input):
+    # Split user input into words
+    user_words = user_input.lower().split()
+    
+    # Check if any word in user input matches the accepted keywords
+    for word in user_words:
+        if word in keywords:
             return True
     return False
 
