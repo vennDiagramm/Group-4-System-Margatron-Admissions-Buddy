@@ -147,7 +147,7 @@ def handle_conversation(csv_path):
 def main():
     # Streamlit set up
     st.set_page_config(page_title="Margatron", page_icon="🤖") # pwde nato e himo as mmcm logo
-    st.title("Margatron, Admissions Buddy :books:")
+    st.title("Margatron, Admissions Buddy :books: Meow")
     st.write("Hello, how may I help you? Meow")
 
     # Provide the path to your CSV file here
