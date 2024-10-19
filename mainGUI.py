@@ -50,7 +50,7 @@ def query_gemini_api(csv_path, user_input):
 
     # if it is found
     if any(phrase in user_input.strip() for phrase in ACCEPTED_KEYWORDS):
-        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query:  {user_input}", csv_content])
+        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query:  {user_input}. Limit up to 350 words", csv_content])
     elif any(words in user_input.strip() for words in GOODBYE_KEYWORDS):
         return "You are very much welcome! I am glad I could help!"
     elif any(keyword in user_input.strip() for keyword in GREETING_KEYWORDS):
@@ -62,7 +62,7 @@ def query_gemini_api(csv_path, user_input):
         return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
     
     else:
-        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query:  {user_input}", csv_content])
+        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query:  {user_input}. Limit up to 350 words", csv_content])
     
     
     response = response.text
