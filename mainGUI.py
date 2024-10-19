@@ -9,6 +9,8 @@ from dotenv import load_dotenv # comment out if diritso API_KEY from command lin
 
 # to deal with nonesense
 import nonesenseChecking as nc
+# for more flexibility
+import re
 
 
 # load the API KEY -- remove if command line
@@ -49,12 +51,13 @@ def query_gemini_api(csv_path, user_input):
     
 
     # if it is found
-    if any(phrase in user_input.strip() for phrase in ACCEPTED_KEYWORDS):
+    if contains_keywords(user_input, ACCEPTED_KEYWORDS):
         response = model.generate_content([f"{tone}. Give me an answer based on this data and the query:  {user_input}. Limit up to 350 words", csv_content])
-    elif any(words in user_input.strip() for words in GOODBYE_KEYWORDS):
+    elif contains_keywords(user_input, GOODBYE_KEYWORDS):
         return "You are very much welcome! I am glad I could help!"
-    elif any(keyword in user_input.strip() for keyword in GREETING_KEYWORDS):
-        return "Hello! How can I assist you with admission information today?" 
+    elif contains_keywords(user_input, GREETING_KEYWORDS):
+        return "Hello! How can I assist you with admission information today?"
+        
     
 
     # Nonsense input check 
@@ -71,6 +74,15 @@ def query_gemini_api(csv_path, user_input):
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
     
     return response
+
+
+def contains_keywords(user_input, keywords):
+    for keyword in keywords:
+        # Use regex to match keyword anywhere in the sentence
+        pattern = re.compile(r'\b' + re.escape(keyword) + r'\b', re.IGNORECASE)
+        if re.search(pattern, user_input):
+            return True
+    return False
 
 
 # Function to handle the conversation
