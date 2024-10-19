@@ -9,7 +9,7 @@ from dotenv import load_dotenv # comment out if diritso API_KEY from command lin
 
 # to deal with nonesense
 import nonesenseChecking as nc
-import spacy
+import spacy #asd
 
 nlp = spacy.load("en_core_web_sm")
 
