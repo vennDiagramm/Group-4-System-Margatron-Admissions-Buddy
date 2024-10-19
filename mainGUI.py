@@ -23,8 +23,47 @@ genai.configure(api_key=api_key)
 # Define constants
 TONE = "Respond in a formal and professional manner and give out any links if needed. Do not say anything about reading from a text."
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo"]
-ACCEPTED_PHRASES = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year"]
+ACCEPTED_PHRASES = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships"]
 GOODBYE_WORDS = ["thank you", "goodbye", "farewell"]
+
+
+FAQS_KEYWORDS = [
+    "how to apply", "online application", "onsite enrollment",
+    "tuition fees", "online registration", "curriculum",
+    "prospectus", "programs", "school fees",
+    "program fees", "payment option", "enrollment requirements",
+    "application process", "admission office", "application form",
+    "report card", "campus", "guardian authorization",
+    "parent enrollment", "flux"
+]
+
+SCHOLARSHIPS_KEYWORDS = [
+    "E.T. Yuchengco Institutional Scholarship", "full tuition",
+    "miscellaneous fees", "scholarship retention policy",
+    "GWA requirement", "online application form",
+    "proof of enrollment", "scholarship requirements",
+    "Letter of Acceptance", "Scholarship Application Form",
+    "Report Card", "recent ITR", "academic excellence award scholarship",
+    "tuition discount", "L/F/D fee discount", "President's List",
+    "academic achiever incentives", "sibling discount",
+    "Jose Rizal Scholarship", "tuition fees discount",
+    "income requirement","non-filing certification",
+    "OFW contract", "Bukas installment plan",
+    "flexible payment plans", "BPI Foundation Pagpugay Scholarship Fund",
+    "scholarship eligibility","scholarship application process",
+    "installment plan requirements"
+]
+
+COLLEGES_KEYWORDS = [
+    "Alfonso T. Yuchengco College of Business", "College of Arts and Science",
+    "College of Computer and Information Science", "College of Engineering and Architecture",
+    "College of Health Sciences", "colleges" "liberal arts",
+    "undergraduate programs", "top college schools in Davao City",
+    "new college applicants", "transfer applicants",
+    "1st Semester SY 2024-2025", "admission process",
+    "top colleges in the Philippines"
+]
+
 
 
 # Extract data from a CSV file
@@ -42,6 +81,19 @@ def extract_text_from_csv(csv_path):
     except Exception as e:
         st.error(f"An error occurred while reading the CSV file: {str(e)}")
         return ""
+
+# Determine which CSV file to use based on user input
+def determine_csv_file(user_input):
+    user_input = user_input.lower()
+    if any(keyword in user_input for keyword in COLLEGES_KEYWORDS):
+        return "scrapped_college.csv"
+    elif any(keyword in user_input for keyword in SCHOLARSHIPS_KEYWORDS):
+        return "scrapped_scholarship.csv"
+    elif any(keyword in user_input for keyword in FAQS_KEYWORDS):
+        return "scrapped_FAQs.csv"
+    else:
+        # Default to one of the files if no specific keywords are found
+        return "scrapped_FAQs.csv"
 
  # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
