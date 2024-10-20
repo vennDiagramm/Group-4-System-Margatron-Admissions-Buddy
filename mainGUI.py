@@ -22,8 +22,8 @@ api_key = os.getenv('API_KEY')
 genai.configure(api_key=api_key)
 
 
-GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo"]
-ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application", "pay", "departments", "colleges", ""]
+GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo",]
+ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application", "pay", "departments", "colleges"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 
 # Extract data from a CSV file
@@ -37,7 +37,7 @@ def extract_text_from_csv(csv_path):
     return csv_content
 
 
-def remove_punctuation(text):
+def remove_punctuation(text): #removes punctuations
     return re.sub(r'[^\w\s]', '', text)
 
 def contains_keywords(user_input, keywords):
@@ -69,7 +69,7 @@ def query_gemini_api(csv_path, user_input):
 
     # Nonsense input check 
     elif (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
-        return "I'm sorry, I can't help you with that. Could you please ask something else or clarify your question?"
+        return "I'm sorry, I can't help you with that. Please ask questions regarding the admission process. Could you please ask something else or clarify your question?"
     
     else:
         response = model.generate_content([f"{tone}. Give me an answer based on this data and the query:  {user_input}. Limit up to 500 words", csv_content])
