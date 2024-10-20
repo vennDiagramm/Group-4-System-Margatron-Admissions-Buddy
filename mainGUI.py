@@ -10,7 +10,7 @@ from dotenv import load_dotenv # comment out if diritso API_KEY from command lin
 # to deal with nonesense
 import nonesenseChecking as nc
 
-
+import re
 
 # load the API KEY -- remove if command line
 load_dotenv()
@@ -36,16 +36,19 @@ def extract_text_from_csv(csv_path):
             csv_content += ' '.join(row) + "\n"
     return csv_content
 
+
+def remove_punctuation(text):
+    return re.sub(r'[^\w\s]', '', text)
+
 def contains_keywords(user_input, keywords):
-    user_words = set(user_input.lower().split())
+    user_input = remove_punctuation(user_input.lower())
+    user_words = set(user_input.split())
     return bool(user_words.intersection(keywords))
-
-
 
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
     # gives out the tone the bot should respond
-    tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without mentioning how the information was obtained. Provide links if needed."
+    tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
     csv_content = extract_text_from_csv(csv_path)
     
     model = genai.GenerativeModel("gemini-1.5-flash")
