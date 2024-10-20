@@ -23,7 +23,7 @@ genai.configure(api_key=api_key)
 
 
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo"]
-ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application", "pay"]
+ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application", "pay", "departments", "colleges"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 
 # Extract data from a CSV file
