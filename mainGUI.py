@@ -23,7 +23,7 @@ genai.configure(api_key=api_key)
 
 
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo"]
-ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application"]
+ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application", "pay"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 
 # Extract data from a CSV file
@@ -45,7 +45,7 @@ def contains_keywords(user_input, keywords):
 # Use the Gemini API to generate a response based on the CSV content and user input
 def query_gemini_api(csv_path, user_input):
     # gives out the tone the bot should respond
-    tone = "Respond in a formal and professional manner and give out any links if needed. Do not say anything about reading from a text."
+    tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without mentioning how the information was obtained. Provide links if needed."
     csv_content = extract_text_from_csv(csv_path)
     
     model = genai.GenerativeModel("gemini-1.5-flash")
@@ -56,7 +56,7 @@ def query_gemini_api(csv_path, user_input):
 
     # if it is found
     if contains_keywords(user_input, ACCEPTED_KEYWORDS):
-        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query:  {user_input}. Limit up to 500 words. Don't give other infromation other than the one being asked.", csv_content])
+        response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", csv_content])
     elif contains_keywords(user_input, GOODBYE_KEYWORDS):
         return "You are very much welcome! I am glad I could help!"
     elif contains_keywords(user_input, GREETING_KEYWORDS):
