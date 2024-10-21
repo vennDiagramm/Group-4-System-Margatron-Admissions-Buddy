@@ -1,0 +1,20 @@
+[theme]
+# Default primary color is a shade of blue
+primaryColor = "#1f77b4"  # Default primary color
+backgroundColor = "#ffffff"  # Default background color (white)
+secondaryBackgroundColor = "#f0f0f0"  # Default secondary background color (light gray)
+textColor = "#000000"  # Default text color (black)
+
+[server]
+headless = true  # Default is headless mode enabled
+
+[client]
+caching = true  # Default caching is enabled
+
+[theme.user]
+imageUrl = "https://github.com/vennDiagramm/admissionBot/blob/main/Icons/student.ico"
+name = "Student"
+
+[theme.assistant]
+imageUrl = "https://your-assistant-icon-url.com/icon.png"
+name = "Assistant"

@@ -103,7 +103,7 @@ def handle_conversation(csv_path):
         st.session_state.messages.append({"role": "user", "content": user_input}) 
 
         # Display user message in chat message container
-        with st.chat_message("Icons/student.ico"): # we can change this. this is the icon for the human
+        with st.chat_message("Student"): # we can change this. this is the icon for the human
             st.markdown(user_input)
 
         # Query the Gemini API with the user input
