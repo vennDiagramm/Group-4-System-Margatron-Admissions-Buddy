@@ -85,8 +85,8 @@ def query_gemini_api(db_path, user_input):
     response = response.text
 
     if "Not found" in response or "Unavailable" in response or not response.strip():
-        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?"
-
+        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
+    
     return response
 
 # Function to handle the conversation
@@ -125,13 +125,13 @@ def handle_conversation(csv_path):
 # function to handle GUI
 def main():
     # Streamlit set up
-    st.set_page_config(page_title="Margatron", page_icon="🤖") # pwde nato e himo as mmcm logo
+    st.set_page_config(page_title="Margatron", page_icon="Icons/mapua_icon_83e_icon.ico") # pwde nato e himo as mmcm logo
     st.title("Margatron, Admissions Buddy :books:")
     st.write("Hello, how may I help you?")
 
     # Provide the path to your CSV file here
-    db_path = "database.db"
-    handle_conversation(db_path)
+    csv_path = "scrapped_FAQs.csv"
+    handle_conversation(csv_path)
 
 
 # to run main
