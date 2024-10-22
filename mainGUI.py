@@ -50,7 +50,7 @@ TABLE_KEYWORDS = {
     # CCIS-related keywords
     "computer science": "CCIS",
     "information systems": "CCIS",
-    "emc": "CCIS",  
+    "entertainment and multimedia computing": "CCIS",  
     
     # CEA-related keywords
     "architecture": "CEA",
