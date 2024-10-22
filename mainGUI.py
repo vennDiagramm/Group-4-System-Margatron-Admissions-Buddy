@@ -157,6 +157,7 @@ def handle_conversation(db_path):
 
     # Display chat messages from history on app rerun
     for message in st.session_state.messages:
+        # para unsa mani ???? ||| hi gais, notice me
         avatar_path = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/student.ico' if message["role"] == "user" else 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/mapua_icon_83e_icon.ico'
         
         with st.chat_message(message["role"], avatar=avatar_path):
@@ -170,16 +171,16 @@ def handle_conversation(db_path):
         st.session_state.messages.append({"role": "user", "content": user_input}) 
 
         # Display user message in chat message container
-        user_avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/student.ico'
-        with st.chat_message("user", avatar = user_avatar):  # we can change this. this is the icon for the human
+        # user_avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/student.ico'
+        with st.chat_message("user", avatar = avatar_path):  # we can change this. this is the icon for the human
             st.markdown(user_input)
 
         # Query the Gemini API with the user input
         result = query_gemini_api(db_path, user_input)
 
         # Display assistant response in chat message container
-        assistant_avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/mapua_icon_83e_icon.ico'
-        with st.chat_message("assistant", avatar = assistant_avatar):  # icon for assistant
+        # assistant_avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/mapua_icon_83e_icon.ico'
+        with st.chat_message("assistant", avatar = avatar_path):  # icon for assistant
             st.markdown(result)
 
         # Add assistant response to chat history
