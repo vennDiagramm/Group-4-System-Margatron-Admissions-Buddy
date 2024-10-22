@@ -6,14 +6,14 @@ from pathlib import Path
 
 # to deal with gui and secret keys
 import streamlit as st
-from dotenv import load_dotenv  # comment out if directly using API_KEY from command line
+from dotenv import load_dotenv 
 
 # to deal with nonsense inputs
 import nonesenseChecking as nc
-
 import re
 
-# load the API KEY -- remove if command line
+
+# load the API KEY 
 load_dotenv()
 
 # Access the API_KEY environment variable
@@ -119,8 +119,8 @@ def query_gemini_api(db_path, user_input):
     # Clean the user input
     user_input = user_input.strip().lower()
 
-    # If input matches accepted keywords
-    if contains_keywords(user_input, ACCEPTED_KEYWORDS):
+    # If input matches accepted keywords and keywords sa tableKeywords
+    if contains_keywords(user_input, ACCEPTED_KEYWORDS) or contains_keywords(user_input, TABLE_KEYWORDS.keys()):
         response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
     
     # If user is saying goodbye
@@ -134,10 +134,6 @@ def query_gemini_api(db_path, user_input):
     # Nonsense input check
     elif (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
         return "I'm sorry, I can't help you with that. Please ask questions regarding the admission process. Could you please ask something else or clarify your question?"
-
-    # Keywords sa table
-    if contains_keywords(user_input, TABLE_KEYWORDS.keys()):
-        response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
 
     # For general queries
     else:
