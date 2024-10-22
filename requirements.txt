@@ -3,4 +3,3 @@ streamlit
 python-dotenv
 nltk
 langdetect
-sqlite3
