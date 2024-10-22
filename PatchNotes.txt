@@ -8,3 +8,11 @@
     - samok siya. mabuang if mag himo ko ug new folder para storage sa docs
     
 3. break it some more hahaha
+
+
+Oct. 22, 2024:
+- There is something wrong with the database as its reading the CCIS as part of the CEA
+- Hold similar/interwined information in one table
+- Create more class files
+- make the repo cleaner
+- add college departments to keywords
