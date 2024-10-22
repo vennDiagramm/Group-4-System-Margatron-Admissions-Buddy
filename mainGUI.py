@@ -69,16 +69,18 @@ TABLE_KEYWORDS = {
     
 }
 
-# Connect to SQLite database and fetch the raw data
-def extract_raw_data_from_db(db_path):
+# Connect to SQLite database and fetch the raw data from a specific table
+def extract_raw_data_from_db(db_path, table_name):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    cursor.execute("SELECT * from DataBase")  
+    # Use the table_name parameter in the SQL query
+    query = f"SELECT content FROM {table_name}"  # Adjust this line to select the specific column
+    cursor.execute(query)  
     rows = cursor.fetchall()
 
     # Joining the rows as a string for the API input
-    db_content = "\n".join([" ".join(map(str, row)) for row in rows])
+    db_content = "\n".join([row[0] for row in rows])  # Assuming 'content' is the first column
     
     conn.close()
     return db_content
