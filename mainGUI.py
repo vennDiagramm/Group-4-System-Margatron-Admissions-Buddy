@@ -27,7 +27,7 @@ genai.configure(api_key=api_key)
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
 ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
                      "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
-                     "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs"]
+                     "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 TABLE_KEYWORDS = {
     # Admissions-related keywords
@@ -93,9 +93,21 @@ def remove_punctuation(text):  # removes punctuations
 
 # Check if user input contains any keywords || same class file above
 def contains_keywords(user_input, keywords):
-    user_input = remove_punctuation(user_input.lower())
+    # Normalize input by removing punctuation and converting to lowercase
+    user_input = remove_punctuation(user_input.lower()).strip()
+    
+    # Create a set of user words
     user_words = set(user_input.split())
-    return bool(user_words.intersection(keywords))
+    
+    # Check for multi-word phrases || kasi we have a problem when it comes to splitting.
+    for keyword in keywords:
+        # Split the keyword into words
+        keyword_words = set(keyword.split())
+        # Check if all words in the keyword are present in user_words
+        if keyword_words.issubset(user_words):
+            return True
+            
+    return False
 
 
 # query handler
