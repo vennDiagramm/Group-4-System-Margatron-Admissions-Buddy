@@ -27,6 +27,47 @@ genai.configure(api_key=api_key)
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
 ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application", "pay", "departments", "colleges", "SHS", "JHS", "College programs", "courses", "junior high school", "senior high school"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
+TABLE_KEYWORDS = {
+    # Admissions-related keywords
+    "admissions": "ADMISSION",
+    "faqs": "ADMISSION",
+    "jhs": "ADMISSION",
+    "shs": "ADMISSION",
+    
+    # ATYCB-related keywords
+    "accountancy": "ATYCB",
+    "entrepreneurship": "ATYCB",
+    "real estate": "ATYCB",
+    "management accounting": "ATYCB",
+    "tourism": "ATYCB",
+    
+    # CAS-related keywords
+    "multimedia arts": "CAS",
+    "communication": "CAS",
+    
+    # CCIS-related keywords
+    "computer science": "CCIS",
+    "information systems": "CCIS",
+    "emc": "CCIS",  
+    
+    # CEA-related keywords
+    "architecture": "CEA",
+    "chemical engineering": "CEA",
+    "electronic engineering": "CEA",
+    "civil engineering": "CEA",
+    "environmental engineering": "CEA",
+    "mechanical engineering": "CEA",
+    "ce": "CEA",  
+    "me": "CEA", 
+    
+    # CHS-related keywords
+    "psychology": "CHS",
+    "pharmacy": "CHS",
+    "physical therapy": "CHS",
+    "bio": "CHS",  
+    
+    
+}
 
 # Connect to SQLite database and fetch the raw data
 def extract_raw_data_from_db(db_path):
@@ -55,13 +96,71 @@ def contains_keywords(user_input, keywords):
     return bool(user_words.intersection(keywords))
 
 
-# Use the Gemini API to generate a response based on the database content and user input
 def query_gemini_api(db_path, user_input):
-    # Gives out the tone the bot should respond
+    # Tone for the bot's response
     tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
     
-    # Extracting the content from the database
-    db_content = extract_raw_data_from_db(db_path)
+    # Default table
+    table_to_query = "all_data"
+
+    # Check for specific keywords to switch tables
+    for keyword, table in TABLE_KEYWORDS.items():
+        if keyword in user_input.lower():
+            table_to_query = table
+            break
+
+    # Extracting the content from the specified table
+    db_content = extract_raw_data_from_db(db_path, table_to_query)
+
+    # Load the Gemini model
+    model = genai.GenerativeModel("gemini-1.5-flash")
+
+    # Clean the user input
+    user_input = user_input.strip().lower()
+
+    # If input matches accepted keywords
+    if contains_keywords(user_input, ACCEPTED_KEYWORDS):
+        response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
+    
+    # If user is saying goodbye
+    elif contains_keywords(user_input, GOODBYE_KEYWORDS):
+        return "You are very much welcome! I am glad I could help!"
+    
+    # If user is greeting the bot
+    elif contains_keywords(user_input, GREETING_KEYWORDS):
+        return "Hello! How can I assist you with admission information today?"
+
+    # Nonsense input check
+    elif (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
+        return "I'm sorry, I can't help you with that. Please ask questions regarding the admission process. Could you please ask something else or clarify your question?"
+
+    # For general queries
+    else:
+        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
+
+    # Extract the response text
+    response = response.text
+
+    # If the response is not valid
+    if "Not found" in response or "Unavailable" in response or not response.strip():
+        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
+    
+    return response
+def query_gemini_api(db_path, user_input):
+    # Tone for the bot's response
+    tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
+    
+    # Default table
+    table_to_query = "all_data"
+
+    # Check for specific keywords to switch tables
+    for keyword, table in TABLE_KEYWORDS.items():
+        if keyword in user_input.lower():
+            table_to_query = table
+            break
+
+    # Extracting the content from the specified table
+    db_content = extract_raw_data_from_db(db_path, table_to_query)
 
     # Load the Gemini model
     model = genai.GenerativeModel("gemini-1.5-flash")
@@ -142,10 +241,9 @@ def main():
     st.write("Hello, how may I help you?")
 
     # Provide the path to your database file here
-    db_path = "database.db"  # This is the SQLite database path
+    db_path = "databasefinal.db"  # This is the SQLite database path
     handle_conversation(db_path)
 
 
-# To run main
 if __name__ == "__main__":
     main()
