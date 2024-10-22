@@ -65,8 +65,6 @@ TABLE_KEYWORDS = {
     "pharmacy": "CHS",
     "physical therapy": "CHS",
     "bio": "CHS",  
-    
-    
 }
 
 # Connect to SQLite database and fetch the raw data from a specific table
@@ -148,6 +146,8 @@ def query_gemini_api(db_path, user_input):
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
     
     return response
+
+
 def query_gemini_api(db_path, user_input):
     # Tone for the bot's response
     tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
