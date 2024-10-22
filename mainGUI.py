@@ -135,6 +135,10 @@ def query_gemini_api(db_path, user_input):
     elif (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
         return "I'm sorry, I can't help you with that. Please ask questions regarding the admission process. Could you please ask something else or clarify your question?"
 
+    # Keywords sa table
+    if contains_keywords(user_input, TABLE_KEYWORDS.keys()):
+        response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
+
     # For general queries
     else:
         response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
