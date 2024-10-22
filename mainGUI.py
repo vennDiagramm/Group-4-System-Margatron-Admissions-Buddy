@@ -67,7 +67,7 @@ TABLE_KEYWORDS = {
     "bio": "CHS",  
 }
 
-# Connect to SQLite database and fetch the raw data from a specific table
+# Connect to SQLite database and fetch the raw data from a specific table || we can create in separte class file
 def extract_raw_data_from_db(db_path, table_name):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -84,70 +84,19 @@ def extract_raw_data_from_db(db_path, table_name):
     return db_content
 
 
-# Remove punctuations
+# Remove punctuations || this one either rename nonsenseChecker or create a class file for this one and contains_keywords
 def remove_punctuation(text):  # removes punctuations
     return re.sub(r'[^\w\s]', '', text)
 
 
-# Check if user input contains any keywords
+# Check if user input contains any keywords || same class file above
 def contains_keywords(user_input, keywords):
     user_input = remove_punctuation(user_input.lower())
     user_words = set(user_input.split())
     return bool(user_words.intersection(keywords))
 
 
-def query_gemini_api(db_path, user_input):
-    # Tone for the bot's response
-    tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
-    
-    # Default table
-    table_to_query = "all_data"
-
-    # Check for specific keywords to switch tables
-    for keyword, table in TABLE_KEYWORDS.items():
-        if keyword in user_input.lower():
-            table_to_query = table
-            break
-
-    # Extracting the content from the specified table
-    db_content = extract_raw_data_from_db(db_path, table_to_query)
-
-    # Load the Gemini model
-    model = genai.GenerativeModel("gemini-1.5-flash")
-
-    # Clean the user input
-    user_input = user_input.strip().lower()
-
-    # If input matches accepted keywords
-    if contains_keywords(user_input, ACCEPTED_KEYWORDS):
-        response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
-    
-    # If user is saying goodbye
-    elif contains_keywords(user_input, GOODBYE_KEYWORDS):
-        return "You are very much welcome! I am glad I could help!"
-    
-    # If user is greeting the bot
-    elif contains_keywords(user_input, GREETING_KEYWORDS):
-        return "Hello! How can I assist you with admission information today?"
-
-    # Nonsense input check
-    elif (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
-        return "I'm sorry, I can't help you with that. Please ask questions regarding the admission process. Could you please ask something else or clarify your question?"
-
-    # For general queries
-    else:
-        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
-
-    # Extract the response text
-    response = response.text
-
-    # If the response is not valid
-    if "Not found" in response or "Unavailable" in response or not response.strip():
-        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
-    
-    return response
-
-
+# query handler
 def query_gemini_api(db_path, user_input):
     # Tone for the bot's response
     tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
@@ -221,14 +170,16 @@ def handle_conversation(db_path):
         st.session_state.messages.append({"role": "user", "content": user_input}) 
 
         # Display user message in chat message container
-        with st.chat_message("user", avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/student.ico'):  # we can change this. this is the icon for the human
+        user_avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/student.ico'
+        with st.chat_message("user", avatar = user_avatar):  # we can change this. this is the icon for the human
             st.markdown(user_input)
 
         # Query the Gemini API with the user input
         result = query_gemini_api(db_path, user_input)
 
         # Display assistant response in chat message container
-        with st.chat_message("assistant", avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/mapua_icon_83e_icon.ico'):  # icon for assistant
+        assistant_avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/mapua_icon_83e_icon.ico'
+        with st.chat_message("assistant", avatar = assistant_avatar):  # icon for assistant
             st.markdown(result)
 
         # Add assistant response to chat history
