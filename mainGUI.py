@@ -34,7 +34,7 @@ def extract_raw_data_from_db(db_path):
     cursor = conn.cursor()
 
     # Example: Fetch all data from a particular table (you need to adjust this based on your actual data)
-    cursor.execute("SELECT * FROM your_table_name")  # Modify with your table name
+    cursor.execute("SELECT * from DataBase")  # Modify with your table name
     rows = cursor.fetchall()
 
     # Joining the rows as a string for the API input
