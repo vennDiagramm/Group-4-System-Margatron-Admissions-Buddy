@@ -26,7 +26,7 @@ genai.configure(api_key=api_key)
 # Keywords for conversation
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
 ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
-                     "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "College programs", 
+                     "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
                      "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 TABLE_KEYWORDS = {
