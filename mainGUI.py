@@ -92,22 +92,11 @@ def remove_punctuation(text):  # removes punctuations
 
 
 # Check if user input contains any keywords || same class file above
+# we have a problem with the splitting
 def contains_keywords(user_input, keywords):
-    # Normalize input by removing punctuation and converting to lowercase
-    user_input = remove_punctuation(user_input.lower()).strip()
-    
-    # Create a set of user words
+    user_input = remove_punctuation(user_input.lower())
     user_words = set(user_input.split())
-    
-    # Check for multi-word phrases || kasi we have a problem when it comes to splitting.
-    for keyword in keywords:
-        # Split the keyword into words
-        keyword_words = set(keyword.split())
-        # Check if all words in the keyword are present in user_words
-        if keyword_words.issubset(user_words):
-            return True
-            
-    return False
+    return bool(user_words.intersection(keywords))
 
 
 # query handler
