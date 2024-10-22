@@ -25,7 +25,7 @@ genai.configure(api_key=api_key)
 
 # Keywords for conversation
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
-ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application", "pay", "departments", "colleges"]
+ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application", "pay", "departments", "colleges", "SHS", "JHS", "College programs", "courses", "junior high school", "senior high school"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 
 # Connect to SQLite database and fetch the raw data
@@ -33,8 +33,7 @@ def extract_raw_data_from_db(db_path):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    # Example: Fetch all data from a particular table (you need to adjust this based on your actual data)
-    cursor.execute("SELECT * from DataBase")  # Modify with your table name
+    cursor.execute("SELECT * from DataBase")  
     rows = cursor.fetchall()
 
     # Joining the rows as a string for the API input
