@@ -159,7 +159,6 @@ def handle_conversation(db_path):
 
     # Display chat messages from history on app rerun
     for message in st.session_state.messages:
-        # para unsa mani ???? ||| hi gais, notice me
         avatar_path = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/student.ico' if message["role"] == "user" else 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/mapua_icon_83e_icon.ico'
         
         with st.chat_message(message["role"], avatar=avatar_path):
