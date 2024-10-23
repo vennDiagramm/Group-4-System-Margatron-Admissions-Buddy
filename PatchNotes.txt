@@ -1,19 +1,7 @@
 **PATCH NOTES**
 
-1. Make GUI better
-    - the icons for both human and assistant
-    - title page, icon sa website bar
 
-2. Unsaon pag make sa repo na hinlo haha
+1. Unsaon pag make sa repo na hinlo haha
     - samok siya. mabuang if mag himo ko ug new folder para storage sa docs
     
-3. break it some more hahaha
-
-
-Oct. 22, 2024:
-- There is something wrong with the database as its reading the CCIS as part of the CEA
-- Hold similar/interwined information in one table
-- Create more class files
-- make the repo cleaner
-- add college departments to keywords
-- MANGUTANA KAY SIR, TANA DILI NA MAGING KOLD
+2. break it some more hahaha

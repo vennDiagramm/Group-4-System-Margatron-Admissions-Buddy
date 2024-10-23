@@ -146,7 +146,7 @@ def query_gemini_api(db_path, user_input):
     response = response.text
 
     # If the response is not valid
-    if "Not found" in response or "Unavailable"  in response or "not found" in response or "does not contain" in response or not response.strip():
+    if "Not found" in response or "Unavailable"  in response or "not found" in response or "does not contain" or "does not include" in response or "is not provided in this document" or "does not mention" in response or "does explicitly mention" in response or not response.strip():
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
     
     return response
