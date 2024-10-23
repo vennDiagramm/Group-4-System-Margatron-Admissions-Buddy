@@ -25,17 +25,38 @@ genai.configure(api_key=api_key)
 
 # Keywords for conversation
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
-ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
-                     "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
-                     "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 TABLE_KEYWORDS = {
     # Admissions-related keywords
     "admissions": "ADMISSION",
-    "payment" : "ADMISSION",
+    "payment methods" : "ADMISSION",
     "faqs": "ADMISSION",
     "jhs": "ADMISSION",
     "shs": "ADMISSION",
+    "requirements" : "ADMISSION",
+    "admissions" : "ADMISSION",
+    "tuition fees" : "ADMISSION",
+    "enroll" : "ADMISSION",
+    "school year" : "ADMISSION",
+    "scholarships" : "ADMISSION",
+    "apply" : "ADMISSION",
+    "enrollment" : "ADMISSION",
+    "application" : "ADMISSION",
+    "pay" : "ADMISSION",
+    "departments" : "ADMISSION", 
+    "colleges" : "ADMISSION",
+    "shs" : "ADMISSION",
+    "jhs" : "ADMISSION",
+    "college programs" : "ADMISSION",
+    "courses" : "ADMISSION", 
+    "junior high school" : "ADMISSION",
+    "senior high school" : "ADMISSION",
+    "ccis" : "ADMISSION",
+    "cea" : "ADMISSION",
+    "atycb" : "ADMISSION",
+    "cas" : "ADMISSION", 
+    "chs" : "ADMISSION", 
+    "college" : "ADMISSION",
     
     # ATYCB-related keywords
     "accountancy": "ATYCB",
@@ -124,10 +145,7 @@ def query_gemini_api(db_path, user_input):
     user_input = user_input.strip().lower()
 
     # If input matches accepted keywords and keywords sa tableKeywords
-    if contains_keywords(user_input, ACCEPTED_KEYWORDS):
-        response = model.generate_content([f"{tone}. Answer this: {user_input} ONLY from this information. Omit unecessary information.", db_path])
-        
-    elif contains_keywords(user_input, TABLE_KEYWORDS.keys()):
+    if contains_keywords(user_input, TABLE_KEYWORDS.keys()):
         response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
     
     # If user is saying goodbye
