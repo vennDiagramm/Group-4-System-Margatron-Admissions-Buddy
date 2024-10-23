@@ -6,14 +6,14 @@ from pathlib import Path
 
 # to deal with gui and secret keys
 import streamlit as st
-from dotenv import load_dotenv 
+from dotenv import load_dotenv  # comment out if directly using API_KEY from command line
 
 # to deal with nonsense inputs
 import nonesenseChecking as nc
+
 import re
 
-
-# load the API KEY 
+# load the API KEY -- remove if command line
 load_dotenv()
 
 # Access the API_KEY environment variable
@@ -22,55 +22,43 @@ api_key = os.getenv('API_KEY')
 # Configure the Gemini API using the API key from the environment variable
 genai.configure(api_key=api_key)
 
-
 # Keywords for conversation
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
-ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
-                     "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
-                     "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college"]
+ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application", "pay", "departments", "colleges", "SHS", "JHS", "College programs", "courses", "junior high school", "senior high school"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 
-
-# Connect to SQLite database and fetch the raw data from a specific table || we can create in separte class file
-def extract_raw_data_from_db(db_path, table_name):
+# Connect to SQLite database and fetch the raw data from "all_data" table
+def extract_raw_data_from_db(db_path):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    # Use the table_name parameter in the SQL query
-    query = f"SELECT content FROM {table_name}"  # Adjust this line to select the specific column
-    cursor.execute(query)  
+
+    query = "SELECT content FROM DataBase"  
+    cursor.execute(query)
     rows = cursor.fetchall()
 
     # Joining the rows as a string for the API input
     db_content = "\n".join([row[0] for row in rows])  # Assuming 'content' is the first column
-    
+
     conn.close()
     return db_content
 
-
-# Remove punctuations || this one either rename nonsenseChecker or create a class file for this one and contains_keywords
-def remove_punctuation(text):  # removes punctuations
+# Remove punctuations
+def remove_punctuation(text):
     return re.sub(r'[^\w\s]', '', text)
 
-
-# Check if user input contains any keywords || same class file above
-# we have a problem with the splitting -- is it necessary to split?
+# Check if user input contains any keywords
 def contains_keywords(user_input, keywords):
     user_input = remove_punctuation(user_input.lower())
-    # Check for each keyword directly in the user input
-    return any(keyword in user_input for keyword in keywords)
+    user_words = set(user_input.split())
+    return bool(user_words.intersection(keywords))
 
-
-# query handler
 def query_gemini_api(db_path, user_input):
     # Tone for the bot's response
     tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
-    
-    # Default table
-    table_to_query = "all_data"
 
-    # Extracting the content from the specified table
-    db_content = extract_raw_data_from_db(db_path, table_to_query)
+
+    db_content = extract_raw_data_from_db(db_path)
 
     # Load the Gemini model
     model = genai.GenerativeModel("gemini-1.5-flash")
@@ -78,7 +66,7 @@ def query_gemini_api(db_path, user_input):
     # Clean the user input
     user_input = user_input.strip().lower()
 
-    # If input matches accepted keywords and keywords sa tableKeywords
+    # If input matches accepted keywords
     if contains_keywords(user_input, ACCEPTED_KEYWORDS):
         response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
     
@@ -102,11 +90,10 @@ def query_gemini_api(db_path, user_input):
     response = response.text
 
     # If the response is not valid
-    if "Not found" in response or "Unavailable"  in response or "not found" in response or "does not contain" or "does not include" in response or "is not provided in this document" or "does not mention" in response or "does explicitly mention" in response or not response.strip():
-        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
+    if "Not found" in response or "Unavailable" in response or not response.strip():
+        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?"
     
     return response
-
 
 # Function to handle the conversation
 def handle_conversation(db_path):
@@ -121,41 +108,37 @@ def handle_conversation(db_path):
         with st.chat_message(message["role"], avatar=avatar_path):
             st.markdown(message["content"])
 
-    # Capture user input -- mao kibali ni asa dapit mag chat c user. mao sab ni mo appear sa chatbox
+    # Capture user input
     user_input = st.chat_input("Ask questions regarding admissions. Please be specific...")
 
     if user_input:
         # Add user message to chat history
-        st.session_state.messages.append({"role": "user", "content": user_input}) 
+        st.session_state.messages.append({"role": "user", "content": user_input})
 
         # Display user message in chat message container
-        user_avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/student.ico'
-        with st.chat_message("user", avatar = user_avatar):  # we can change this. this is the icon for the human
+        with st.chat_message("user", avatar='https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/student.ico'):
             st.markdown(user_input)
 
         # Query the Gemini API with the user input
         result = query_gemini_api(db_path, user_input)
 
         # Display assistant response in chat message container
-        assistant_avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/mapua_icon_83e_icon.ico'
-        with st.chat_message("assistant", avatar = assistant_avatar):  # icon for assistant
+        with st.chat_message("assistant", avatar='https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/mapua_icon_83e_icon.ico'):
             st.markdown(result)
 
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "content": result})
 
-
 # Function to handle GUI
 def main():
     # Streamlit set up
-    st.set_page_config(page_title="Margatron", page_icon="Icons/mapua_icon_83e_icon.ico")  # pwde nato e himo as mmcm logo
+    st.set_page_config(page_title="Margatron", page_icon="Icons/mapua_icon_83e_icon.ico")  # Change to your preferred logo
     st.title("Margatron, Admissions Buddy :books:")
     st.write("Hello, how may I help you?")
 
     # Provide the path to your database file here
-    db_path = "database/databasefinal.db"  # This is the SQLite database path
+    db_path = "database1.db"  # This is the SQLite database path
     handle_conversation(db_path)
-
 
 if __name__ == "__main__":
     main()
