@@ -142,7 +142,7 @@ def main():
     st.write("Hello, how may I help you?")
 
     # Provide the path to your database file here
-    db_path = "database5.db"  # This is the SQLite database path
+    db_path = "database/database5.db"  # This is the SQLite database path
     handle_conversation(db_path)
 
 
