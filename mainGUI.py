@@ -25,71 +25,11 @@ genai.configure(api_key=api_key)
 
 # Keywords for conversation
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
+ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
+                     "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
+                     "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
-TABLE_KEYWORDS = {
-    # Admissions-related keywords
-    "admissions": "ADMISSION",
-    "payment methods" : "ADMISSION",
-    "faqs": "ADMISSION",
-    "jhs": "ADMISSION",
-    "shs": "ADMISSION",
-    "requirements" : "ADMISSION",
-    "admissions" : "ADMISSION",
-    "tuition fees" : "ADMISSION",
-    "enroll" : "ADMISSION",
-    "school year" : "ADMISSION",
-    "scholarships" : "ADMISSION",
-    "apply" : "ADMISSION",
-    "enrollment" : "ADMISSION",
-    "application" : "ADMISSION",
-    "pay" : "ADMISSION",
-    "departments" : "ADMISSION", 
-    "colleges" : "ADMISSION",
-    "shs" : "ADMISSION",
-    "jhs" : "ADMISSION",
-    "college programs" : "ADMISSION",
-    "courses" : "ADMISSION", 
-    "junior high school" : "ADMISSION",
-    "senior high school" : "ADMISSION",
-    "ccis" : "ADMISSION",
-    "cea" : "ADMISSION",
-    "atycb" : "ADMISSION",
-    "cas" : "ADMISSION", 
-    "chs" : "ADMISSION", 
-    "college" : "ADMISSION",
-    
-    # ATYCB-related keywords
-    "accountancy": "ATYCB",
-    "entrepreneurship": "ATYCB",
-    "real estate": "ATYCB",
-    "management accounting": "ATYCB",
-    "tourism": "ATYCB",
-    
-    # CAS-related keywords
-    "multimedia arts": "CAS",
-    "communication": "CAS",
-    
-    # CCIS-related keywords
-    "computer science": "CCIS",
-    "information systems": "CCIS",
-    "entertainment and multimedia computing": "CCIS",  
-    
-    # CEA-related keywords
-    "architecture": "CEA",
-    "chemical engineering": "CEA",
-    "electronic engineering": "CEA",
-    "civil engineering": "CEA",
-    "environmental engineering": "CEA",
-    "mechanical engineering": "CEA",
-    "ce": "CEA",  
-    "me": "CEA", 
-    
-    # CHS-related keywords
-    "psychology": "CHS",
-    "pharmacy": "CHS",
-    "physical therapy": "CHS",
-    "bio": "CHS",  
-}
+
 
 # Connect to SQLite database and fetch the raw data from a specific table || we can create in separte class file
 def extract_raw_data_from_db(db_path, table_name):
@@ -129,12 +69,6 @@ def query_gemini_api(db_path, user_input):
     # Default table
     table_to_query = "all_data"
 
-    # Check for specific keywords to switch tables
-    for keyword, table in TABLE_KEYWORDS.items():
-        if keyword in user_input.lower():
-            table_to_query = table
-            break
-
     # Extracting the content from the specified table
     db_content = extract_raw_data_from_db(db_path, table_to_query)
 
@@ -145,7 +79,7 @@ def query_gemini_api(db_path, user_input):
     user_input = user_input.strip().lower()
 
     # If input matches accepted keywords and keywords sa tableKeywords
-    if contains_keywords(user_input, TABLE_KEYWORDS.keys()):
+    if contains_keywords(user_input, ACCEPTED_KEYWORDS):
         response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
     
     # If user is saying goodbye
