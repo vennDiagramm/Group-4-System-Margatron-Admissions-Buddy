@@ -32,6 +32,7 @@ GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 TABLE_KEYWORDS = {
     # Admissions-related keywords
     "admissions": "ADMISSION",
+    "payment" : "ADMISSION",
     "faqs": "ADMISSION",
     "jhs": "ADMISSION",
     "shs": "ADMISSION",
