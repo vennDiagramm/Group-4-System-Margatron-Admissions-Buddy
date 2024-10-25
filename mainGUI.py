@@ -85,7 +85,7 @@ def query_gemini_api(db_path, user_input):
         return "Hello! How can I assist you with admission information today?"
 
     # Nonsense input check
-    elif (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
+    elif any(nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
         return "I'm sorry, I can't help you with that. Please ask questions regarding the admission process. Could you please ask something else or clarify your question?"
 
     # For general queries
