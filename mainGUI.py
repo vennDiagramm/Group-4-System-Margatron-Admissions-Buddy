@@ -88,7 +88,6 @@ def chatbot_logic(user_input):
 
 
 def query_gemini_api(db_path, user_input):
-    # Initialize the Gemini model inside the function
     model = genai.GenerativeModel("gemini-1.5-flash")
 
     # Process user input with logic programming style
@@ -97,19 +96,24 @@ def query_gemini_api(db_path, user_input):
     if result:
         return result
     
-    # Fallback to general query if no keyword matches
     tone = "Respond formally and professionally..."
     db_content = extract_raw_data_from_db(db_path)
+
+    try:
+        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
+        response_text = response.text if hasattr(response, 'text') else ""
+        
+        # Handle invalid or empty responses more specifically
+        if "Not found" in response_text or "Unavailable" in response_text or not response_text.strip():
+            print("Response contained 'Not found' or 'Unavailable' or was empty.")
+            return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?"
+        
+        return response_text
     
-    # Use the Gemini API model to generate the response
-    response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
-    
-    # Handle invalid or empty responses
-    response_text = response.text
-    if "Not found" in response_text or "Unavailable" in response_text or not response_text.strip():
-        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?"
-    
-    return response_text
+    except Exception as e:
+        print(f"Error generating response: {e}")
+        return "I'm sorry, there was an error processing your request. Please try again later."
+
 
 
 
