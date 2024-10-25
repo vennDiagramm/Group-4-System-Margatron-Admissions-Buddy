@@ -87,24 +87,29 @@ def chatbot_logic(user_input):
     return "I'm sorry, I didn't quite understand. Could you please rephrase your question?"
 
 
-def query_gemini_api(db_path, user_input):
-    model = genai.GenerativeModel("gemini-1.5-flash")
+# Ensure model initialization
+model = genai.GenerativeModel("gemini-1.5-flash")
 
-    # Process user input with logic programming style
+def query_gemini_api(db_path, user_input):
+    # First, handle response through chatbot_logic (logic programming section)
     result = chatbot_logic(user_input)
-    
     if result:
-        return result
-    
+        return result  # If logic-based response applies, return it directly.
+
+    # If logic-based response doesn't apply, proceed with API call.
     tone = "Respond formally and professionally..."
     db_content = extract_raw_data_from_db(db_path)
-
+    
     try:
-        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
-        response_text = response.text if hasattr(response, 'text') else ""
+        # Use the model to generate a response based on the database content and user query
+        response = model.generate_content([
+            f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words",
+            db_content
+        ])
         
-        # Handle invalid or empty responses more specifically
-        if "Not found" in response_text or "Unavailable" in response_text or not response_text.strip():
+        # Retrieve and validate the response content
+        response_text = response.text if hasattr(response, 'text') else ""
+        if not response_text.strip() or "Not found" in response_text or "Unavailable" in response_text:
             print("Response contained 'Not found' or 'Unavailable' or was empty.")
             return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?"
         
@@ -113,6 +118,7 @@ def query_gemini_api(db_path, user_input):
     except Exception as e:
         print(f"Error generating response: {e}")
         return "I'm sorry, there was an error processing your request. Please try again later."
+
 
 
 
