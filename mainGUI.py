@@ -97,7 +97,7 @@ def query_gemini_api(db_path, user_input):
         return result  # If logic-based response applies, return it directly.
 
     # If logic-based response doesn't apply, proceed with API call.
-    tone = "Respond formally and professionally..."
+    tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
     db_content = extract_raw_data_from_db(db_path)
     
     try:
