@@ -73,7 +73,7 @@ def query_gemini_api(db_path, user_input):
 
     # If input matches accepted keywords || RULES
     if contains_keywords(user_input, ACCEPTED_KEYWORDS):
-        response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
+        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
     
     # If user is saying goodbye
     
