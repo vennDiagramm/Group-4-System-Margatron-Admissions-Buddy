@@ -71,6 +71,10 @@ def query_gemini_api(db_path, user_input):
     # Clean the user input
     user_input = user_input.strip().lower()
 
+    # Nonsense input check
+    if nc.is_mathematical_expression(user_input) or nc.is_nonsensical_input(user_input):
+        return "I'm sorry, I can't help you with that. Please ask questions regarding the admission process. Could you please ask something else or clarify your question?"
+    
     # If input matches accepted keywords || RULES
     if contains_keywords(user_input, ACCEPTED_KEYWORDS):
         response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
@@ -83,11 +87,8 @@ def query_gemini_api(db_path, user_input):
     # If user is greeting the bot
     elif contains_keywords(user_input, GREETING_KEYWORDS) and len(user_input) <= 17:
         return "Hello! How can I assist you with admission information today?"
-
-    # Nonsense input check
-    elif any(nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
-        return "I'm sorry, I can't help you with that. Please ask questions regarding the admission process. Could you please ask something else or clarify your question?"
-
+    
+   
     # For general queries
     else:
         response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
