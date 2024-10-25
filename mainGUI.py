@@ -81,7 +81,7 @@ def query_gemini_api(db_path, user_input):
         return "You are very much welcome! I am glad I could help!"
     
     # If user is greeting the bot
-    elif contains_keywords(user_input, GREETING_KEYWORDS and len(user_input)):
+    elif contains_keywords(user_input, GREETING_KEYWORDS and len(user_input) < 10):
         return "Hello! How can I assist you with admission information today?"
 
     # Nonsense input check
