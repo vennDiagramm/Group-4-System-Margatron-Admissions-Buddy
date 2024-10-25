@@ -25,9 +25,7 @@ genai.configure(api_key=api_key)
 
 # Keywords for conversation
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
-ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
-                     "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
-                     "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college"]
+ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", "apply", "enrollment", "application", "pay", "departments", "colleges", "SHS", "JHS", "College programs", "courses", "junior high school", "senior high school"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 
 # Connect to SQLite database and fetch the raw data
@@ -92,13 +90,13 @@ def query_gemini_api(db_path, user_input):
         response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
 
     # Extract the response text
-    # response = response.text
+    response = response.text
 
     # If the response is not valid
-    if "Not found" in response.text or "Unavailable" in response.text or not response.text.strip():
+    if "Not found" in response or "Unavailable" in response or not response.strip():
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
     
-    return response.text
+    return response
 
 
 # Function to handle the conversation
@@ -144,7 +142,7 @@ def main():
     st.write("Hello, how may I help you?")
 
     # Provide the path to your database file here
-    db_path = "database/database5.db"  # This is the SQLite database path
+    db_path = "database5.db"  # This is the SQLite database path
     handle_conversation(db_path)
 
 
