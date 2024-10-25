@@ -76,12 +76,16 @@ def query_gemini_api(db_path, user_input):
         response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
     
     # If user is saying goodbye
+    
     elif contains_keywords(user_input, GOODBYE_KEYWORDS):
         return "You are very much welcome! I am glad I could help!"
     
     # If user is greeting the bot
-    elif contains_keywords(user_input, GREETING_KEYWORDS):
+    elif all(keyword not in user_input for keyword in GREETING_KEYWORDS):
         return "Hello! How can I assist you with admission information today?"
+        
+    # elif contains_keywords(user_input, GREETING_KEYWORDS):
+        
 
     # Nonsense input check
     elif (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
