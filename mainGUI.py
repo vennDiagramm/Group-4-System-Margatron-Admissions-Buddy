@@ -56,71 +56,50 @@ def contains_keywords(user_input, keywords):
     user_words = set(user_input.split())
     return bool(user_words.intersection(keywords))
 
-def is_greeting(user_input):
-    """Check if the user input contains any greeting keyword."""
-    return contains_keywords(user_input, GREETING_KEYWORDS)
 
-def is_accepted_query(user_input):
-    """Check if the user input contains any accepted keyword related to admissions."""
-    return contains_keywords(user_input, ACCEPTED_KEYWORDS)
-
-def is_goodbye(user_input):
-    """Check if the user input contains any goodbye keyword."""
-    return contains_keywords(user_input, GOODBYE_KEYWORDS)
-
-# Define logic rules for handling responses
-def chatbot_logic(user_input):
-    """
-    Logic-based response system for the chatbot.
-    Instead of sequential if-else, we check for multiple conditions (rules).
-    """
-    if is_greeting(user_input):
-        return "Hello! How can I assist you with admission information today?"
-    
-    elif is_goodbye(user_input):
-        return "You are very much welcome! I am glad I could help!"
-
-    elif is_accepted_query(user_input):
-        return "Sure, I can help with that. Please provide more specific details regarding your query."
-
-    # Default case if no rule applies
-    return "I'm sorry, I didn't quite understand. Could you please rephrase your question?"
-
-
-# Ensure model initialization
-model = genai.GenerativeModel("gemini-1.5-flash")
-
+# Use the Gemini API to generate a response based on the database content and user input
 def query_gemini_api(db_path, user_input):
-    # First, handle response through chatbot_logic (logic programming section)
-    result = chatbot_logic(user_input)
-    if result:
-        return result  # If logic-based response applies, return it directly.
-
-    # If logic-based response doesn't apply, proceed with API call.
+    # Gives out the tone the bot should respond
     tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
+    
+    # Extracting the content from the database
     db_content = extract_raw_data_from_db(db_path)
+
+    # Load the Gemini model
+    model = genai.GenerativeModel("gemini-1.5-flash")
+
+    # Clean the user input
+    user_input = user_input.strip().lower()
+
+    # If input matches accepted keywords || RULES
+    if contains_keywords(user_input, ACCEPTED_KEYWORDS):
+        response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
     
-    try:
-        # Use the model to generate a response based on the database content and user query
-        response = model.generate_content([
-            f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words",
-            db_content
-        ])
-        
-        # Retrieve and validate the response content
-        response_text = response.text if hasattr(response, 'text') else ""
-        if not response_text.strip() or "Not found" in response_text or "Unavailable" in response_text:
-            print("Response contained 'Not found' or 'Unavailable' or was empty.")
-            return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?"
-        
-        return response_text
+    # If user is saying goodbye
     
-    except Exception as e:
-        print(f"Error generating response: {e}")
-        return "I'm sorry, there was an error processing your request. Please try again later."
+    elif contains_keywords(user_input, GOODBYE_KEYWORDS):
+        return "You are very much welcome! I am glad I could help!"
+    
+    # If user is greeting the bot
+    elif contains_keywords(user_input, GREETING_KEYWORDS) and len(user_input) <= 17:
+        return "Hello! How can I assist you with admission information today?"
 
+    # Nonsense input check
+    elif (nc.is_mathematical_expression(user_input)) or (nc.is_nonsensical_input(user_input)):
+        return "I'm sorry, I can't help you with that. Please ask questions regarding the admission process. Could you please ask something else or clarify your question?"
 
+    # For general queries
+    else:
+        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
 
+    # Extract the response text
+    response = response.text
+
+    # If the response is not valid
+    if "Not found" in response or "Unavailable" in response or not response.strip():
+        return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
+    
+    return response
 
 
 # Function to handle the conversation
