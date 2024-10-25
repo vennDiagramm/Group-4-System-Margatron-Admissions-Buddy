@@ -2,7 +2,7 @@ import requests
 import csv
 from bs4 import BeautifulSoup
 
-# Define facts as variables that will serve as our knowledge base.
+# Facts as variables that will serve as our knowledge base.
 url = "https://mcm.edu.ph/programs/college/alfonso-t-yuchengco-college-of-business/accountancy/"
 selectors = [
     "#content",
