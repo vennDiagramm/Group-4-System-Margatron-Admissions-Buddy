@@ -92,13 +92,13 @@ def query_gemini_api(db_path, user_input):
         response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
 
     # Extract the response text
-    response = response.text
+    # response = response.text
 
     # If the response is not valid
     if "Not found" in response or "Unavailable" in response or not response.strip():
         return "I'm sorry, I couldn't find an answer to your question. Could you please rephrase it or ask something else?" 
     
-    return response
+    return response.text
 
 
 # Function to handle the conversation
