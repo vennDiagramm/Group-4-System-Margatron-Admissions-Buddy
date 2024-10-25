@@ -23,8 +23,8 @@ api_key = os.getenv('API_KEY')
 genai.configure(api_key=api_key)
 
 
-# Keywords for conversation
-GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
+# Keywords for conversation || FACTS
+GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you doing", "how are you doing"]
 ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
                      "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
                      "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college"]
@@ -71,7 +71,7 @@ def query_gemini_api(db_path, user_input):
     # Clean the user input
     user_input = user_input.strip().lower()
 
-    # If input matches accepted keywords
+    # If input matches accepted keywords || RULES
     if contains_keywords(user_input, ACCEPTED_KEYWORDS):
         response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
     
