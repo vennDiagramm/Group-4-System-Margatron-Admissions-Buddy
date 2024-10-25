@@ -24,28 +24,12 @@ genai.configure(api_key=api_key)
 
 
 # Keywords for conversation || FACTS
-facts = {
-    "GREETING_KEYWORDS": ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"],
-    
-    "ACCEPTED_KEYWORDS": ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
-                        "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
-                        "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college"],
-    
-    "GOODBYE_KEYWORDS": ["thank you", "goodbye", "farewell"]
-}
+GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
+ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
+                     "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
+                     "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college"]
+GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
 
-
-# Define rules as functions
-def is_greeting(user_input):
-    return user_input.lower() in facts["GREETING_KEYWORDS"]
-
-def is_goodbye(user_input):
-    return user_input.lower() in facts["GOODBYE_KEYWORDS"]
-
-def is_accepted(user_input):
-    return user_input.lower() in facts["ACCEPTED_KEYWORDS"]
-
-    
 # Connect to SQLite database and fetch the raw data
 def extract_raw_data_from_db(db_path):
     conn = sqlite3.connect(db_path)
@@ -88,16 +72,16 @@ def query_gemini_api(db_path, user_input):
     user_input = user_input.strip().lower()
 
     # If input matches accepted keywords || RULES
-    if contains_keywords(user_input, is_accepted(user_input)):
+    if contains_keywords(user_input, ACCEPTED_KEYWORDS):
         response = model.generate_content([f"{tone}. Answer the following query based solely on the provided data: {user_input}. Limit the response to 500 words and omit unnecessary details.", db_content])
     
     # If user is saying goodbye
     
-    elif contains_keywords(user_input, is_goodbye(user_input)):
+    elif contains_keywords(user_input, GOODBYE_KEYWORDS):
         return "You are very much welcome! I am glad I could help!"
     
     # If user is greeting the bot
-    elif contains_keywords(user_input, is_greeting(user_input)) and len(user_input) <= 17:
+    elif contains_keywords(user_input, GREETING_KEYWORDS) and len(user_input) <= 17:
         return "Hello! How can I assist you with admission information today?"
 
     # Nonsense input check
