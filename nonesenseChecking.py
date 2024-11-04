@@ -8,7 +8,7 @@ class InputChecker:
         DetectorFactory.seed = 0  # For consistent results
 
     # Checking if gibberish like asdsacaewefhj
-    def is_nonsensical_input(user_input):
+    def is_nonsensical_input(self, user_input):
         DetectorFactory.seed = 0  # For consistent results
 
         # Check if the input consists of gibberish or random letters
@@ -39,10 +39,10 @@ class InputChecker:
 
 
     # Checking if math ba siya
-    def is_mathematical_expression(user_input):
+    def is_mathematical_expression(self, user_input):
         # Check if the input is a mathematical expression
         return re.match(r'^[\d\s\+\-\*\/\%\(\)]+$', user_input.strip()) is not None
     
     # Remove punctuations
-    def remove_punctuation(text):  # removes punctuations
+    def remove_punctuation(self, text):  # removes punctuations
         return re.sub(r'[^\w\s]', '', text)
