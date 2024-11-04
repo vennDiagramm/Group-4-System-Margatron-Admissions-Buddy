@@ -13,7 +13,14 @@ import nonesenseChecking as nc
 import re
 
 import nltk
-nltk.download('words')
+from nltk.data import find, LookupError
+
+# Check if 'words' resource is available
+try:
+    find('corpora/words.zip')
+except LookupError:
+    nltk.download('words')
+
 
 
 # load the API KEY -- remove if command line
