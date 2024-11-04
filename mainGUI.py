@@ -13,12 +13,6 @@ import nonesenseChecking as nc
 import re
 
 
-# Download the 'words' corpus
-import nltk
-nltk.download('words')
-
-from nltk.corpus import words
-
 # load the API KEY -- remove if command line
 load_dotenv()
 
