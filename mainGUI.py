@@ -12,6 +12,9 @@ from dotenv import load_dotenv  # comment out if directly using API_KEY from com
 import nonesenseChecking as nc
 import re
 
+import nltk
+nltk.download('words')
+
 
 # load the API KEY -- remove if command line
 load_dotenv()

@@ -2,6 +2,9 @@ from langdetect import detect, DetectorFactory
 import re
 from nltk.corpus import words
 
+import nltk
+nltk.download('words')
+
 class InputChecker:
     def __init__(self):
         self.valid_words = set(words.words())  # Load valid words
