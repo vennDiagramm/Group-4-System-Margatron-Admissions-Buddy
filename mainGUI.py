@@ -137,7 +137,7 @@ def handle_conversation(db_path):
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "content": result})
 
-
+# wake up
 # Function to handle GUI
 def main():
     # Streamlit set up
