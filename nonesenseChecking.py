@@ -2,7 +2,6 @@ from langdetect import detect, DetectorFactory
 import re
 from nltk.corpus import words
 
-
 class InputChecker:
     def __init__(self):
         self.valid_words = set(words.words())  # Load valid words
@@ -28,7 +27,7 @@ class InputChecker:
         if all(word not in valid_words for word in input_words):
             return True
 
-        # Language detection -- bisaya fighting :((
+        # Language detection
         try:
             lang = detect(user_input)
             if lang != 'en':
@@ -43,3 +42,7 @@ class InputChecker:
     def is_mathematical_expression(user_input):
         # Check if the input is a mathematical expression
         return re.match(r'^[\d\s\+\-\*\/\%\(\)]+$', user_input.strip()) is not None
+    
+    # Remove punctuations
+    def remove_punctuation(text):  # removes punctuations
+        return re.sub(r'[^\w\s]', '', text)

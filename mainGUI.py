@@ -21,6 +21,8 @@ api_key = os.getenv('API_KEY')
 # Configure the Gemini API using the API key from the environment variable
 genai.configure(api_key=api_key)
 
+# Create an instance of InputChecker
+input_checker = nc.InputChecker()
 
 # Keywords for conversation || FACTS
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
@@ -44,14 +46,9 @@ def extract_raw_data_from_db(db_path):
     return db_content
 
 
-# Remove punctuations
-def remove_punctuation(text):  # removes punctuations
-    return re.sub(r'[^\w\s]', '', text)
-
-
 # Check if user input contains any keywords
 def contains_keywords(user_input, keywords):
-    user_input = remove_punctuation(user_input.lower())
+    user_input = input_checker.remove_punctuation(user_input.lower())
     user_words = set(user_input.split())
     return bool(user_words.intersection(keywords))
 
@@ -69,9 +66,6 @@ def query_gemini_api(db_path, user_input):
 
     # Clean the user input
     user_input = user_input.strip().lower()
-
-    # Create an instance of InputChecker
-    input_checker = nc.InputChecker()
 
 
     # If input matches accepted keywords || RULES
