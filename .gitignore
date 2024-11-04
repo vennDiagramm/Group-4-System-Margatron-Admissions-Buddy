@@ -1,5 +1,6 @@
 # Ignore environment files
 /AdBot/
+/__pycache__/
 
 # Ignore the .env file 
 .env
