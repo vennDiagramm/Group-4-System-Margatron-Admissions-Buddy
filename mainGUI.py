@@ -10,7 +10,6 @@ from dotenv import load_dotenv  # comment out if directly using API_KEY from com
 
 # to deal with nonsense inputs
 import nonesenseChecking as nc
-
 import re
 
 # load the API KEY -- remove if command line
@@ -71,6 +70,9 @@ def query_gemini_api(db_path, user_input):
     # Clean the user input
     user_input = user_input.strip().lower()
 
+    # Create an instance of InputChecker
+    input_checker = nc.InputChecker()
+
 
     # If input matches accepted keywords || RULES
     if contains_keywords(user_input, ACCEPTED_KEYWORDS):
@@ -85,7 +87,7 @@ def query_gemini_api(db_path, user_input):
         return "Hello! How can I assist you with admission information today?"
     
     # Nonsense input check
-    elif any([nc.is_mathematical_expression(user_input), nc.is_nonsensical_input(user_input)]):
+    elif any([input_checker.is_mathematical_expression(user_input), input_checker.is_nonsensical_input(user_input)]):
         return "I'm sorry, I can't help you with that. Please ask questions regarding the admission process. Could you please ask something else or clarify your question?"
 
 
