@@ -13,13 +13,17 @@ import nonesenseChecking as nc
 import re
 
 import nltk
-from nltk.data import find, LookupError
+from nltk.data import find  # Remove LookupError from this line
 
-# Check if 'words' resource is available
+nltk.download('words')  # Download the 'words' corpus
+
 try:
-    find('corpora/words.zip')
-except LookupError:
-    nltk.download('words')
+    find('corpora/words.zip')  # Example: checking for the 'words' resource
+except LookupError:  # This is the built-in LookupError
+    print("NLTK resource not found.")
+
+
+
 
 
 
