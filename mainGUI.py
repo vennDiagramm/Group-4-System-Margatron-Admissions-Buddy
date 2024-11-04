@@ -12,20 +12,6 @@ from dotenv import load_dotenv  # comment out if directly using API_KEY from com
 import nonesenseChecking as nc
 import re
 
-import nltk
-from nltk.data import find  # Remove LookupError from this line
-
-nltk.download('words')  # Download the 'words' corpus
-
-try:
-    find('corpora/words.zip')  # Example: checking for the 'words' resource
-except LookupError:  # This is the built-in LookupError
-    print("NLTK resource not found.")
-
-
-
-
-
 
 # load the API KEY -- remove if command line
 load_dotenv()

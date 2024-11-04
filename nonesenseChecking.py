@@ -2,16 +2,6 @@ from langdetect import detect, DetectorFactory
 import re
 from nltk.corpus import words
 
-import nltk
-from nltk.data import find  # Remove LookupError from this line
-
-nltk.download('words')  # Download the 'words' corpus
-
-try:
-    find('corpora/words.zip')  # Example: checking for the 'words' resource
-except LookupError:  # This is the built-in LookupError
-    print("NLTK resource not found.")
-
 
 
 class InputChecker:
