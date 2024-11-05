@@ -13,3 +13,65 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
 - **Interactive Chat Interface**: Users can engage with the chatbot to get answers to their admission-related questions.
 - **Nonsense Input Checking**: The chatbot intelligently handles irrelevant inputs to improve user interaction.
 - **API Integration**: The application connects to external APIs to provide up-to-date information.
+
+## Getting Started
+
+### How to Create Environment: Run in Terminal
+
+1. **Create a Virtual Environment**:
+   ```bash
+   python -m venv nameofENV
+   ```
+   Example:
+   ```bash
+   python -m venv AdBot
+   ```
+
+2. **Activate the Virtual Environment**:
+   - **Windows**:
+     ```bash
+     AdBot\Scripts\activate
+     ```
+   - **Linux/Mac**:
+     ```bash
+     source AdBot/bin/activate
+     ```
+
+3. **If using Conda**:
+   - Create a Conda environment:
+     ```bash
+     conda create --name myenv
+     ```
+   - Specify Python version:
+     ```bash
+     conda create --name myenv python=3.9
+     ```
+
+4. **Activate Conda Environment**:
+   ```bash
+   conda activate myenv
+   ```
+
+### Needed to Do in the Terminal
+
+Install the required packages:
+```bash
+pip install google-generativeai streamlit python-dotenv langdetect nltk
+```
+
+### Version Needed
+
+Make sure you have Python version 3.9 or higher:
+```bash
+python --version
+```
+Example output: `Python 3.12`
+
+### Environment Variables
+
+Since our GitHub repository is public:
+- Create a `.env` file.
+- Add your API key:
+  ```
+  API_KEY="your-api-key"
+  ```
