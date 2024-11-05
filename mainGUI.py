@@ -33,7 +33,7 @@ GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up",
 ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
                      "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
                      "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college"]
-GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell"]
+GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell", "thanks"]
 
 # Connect to SQLite database and fetch the raw data
 def extract_raw_data_from_db(db_path):
@@ -70,7 +70,6 @@ def query_gemini_api(db_path, user_input):
 
     # Clean the user input
     user_input = user_input.strip().lower()
-
 
     # If user is saying goodbye
     if contains_keywords(user_input, GOODBYE_KEYWORDS):
