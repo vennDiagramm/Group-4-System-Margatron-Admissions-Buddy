@@ -2,6 +2,7 @@ from langdetect import detect, DetectorFactory
 import re
 from nltk.corpus import words
 
+# for streamlit -- because mawala sa iyaha si words
 import nltk
 nltk.download('words')
 

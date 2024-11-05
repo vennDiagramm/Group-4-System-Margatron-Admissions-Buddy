@@ -12,6 +12,7 @@ from dotenv import load_dotenv  # comment out if directly using API_KEY from com
 import nonesenseChecking as nc
 import re
 
+# for streamlit -- because mawala sa iyaha si words
 import nltk
 nltk.download('words')
 
