@@ -16,7 +16,7 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
 
 ## Getting Started
 
-### How to Create Environment: Run in Terminal
+### How to Create Environment:
 
 1. **Create a Virtual Environment**:
    ```bash
