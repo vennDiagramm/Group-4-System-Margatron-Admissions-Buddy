@@ -16,17 +16,23 @@ import re
 import nltk
 nltk.download('words')
 
-# load the API KEY -- remove if command line
+# Load the API Key
 load_dotenv()
-
-# Access the API_KEY environment variable
 api_key = os.getenv('API_KEY')
 
-# Configure the Gemini API using the API key from the environment variable
+# Configure the Gemini API
 genai.configure(api_key=api_key)
 
-# Create an instance of InputChecker
-input_checker = nc.InputChecker()
+# Set model permissions here
+model_id = "tunedModels/chabottttttt4-isle0tpw3rci"
+model_info = genai.get_model(model_id)
+
+# Grant public read permission
+public_permission = model_info.permissions.create(
+    role="READER",
+    grantee_type="EVERYONE",
+)
+print("Public access granted:", public_permission)
 
 # Keywords for conversation || FACTS
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
