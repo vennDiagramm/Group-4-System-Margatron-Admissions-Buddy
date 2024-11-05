@@ -37,7 +37,7 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      source AdBot/bin/activate
      ```
 
-3. **If using Conda**:
+   **If using Conda**:
    - Create a Conda environment:
      ```bash
      conda create --name myenv
@@ -47,7 +47,7 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      conda create --name myenv python=3.9
      ```
 
-4. **Activate Conda Environment**:
+3. **Activate Conda Environment**:
    ```bash
    conda activate myenv
    ```
