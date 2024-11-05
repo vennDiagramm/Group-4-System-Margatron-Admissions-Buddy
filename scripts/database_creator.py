@@ -6,11 +6,11 @@ import pandas as pd
 csv_directory = "C:/Users/Jhouvann/OneDrive/Desktop/College/2ND YEAR/PROG LANGUAGE/Chatbot/CSVS"
 
 # Connect to the SQLite database
-connection = sqlite3.connect("database5.db")
+connection = sqlite3.connect("database1.db")
 cursor = connection.cursor()
 
 # Create the DataBase table to store 'Content' column from all CSVs
-connection.execute("CREATE TABLE IF NOT EXISTS DataBase (Content TEXT)")
+cursor.execute("CREATE TABLE IF NOT EXISTS DataBase (Content TEXT)")
 
 # Loop through all CSV files in the directory
 for filename in os.listdir(csv_directory):
@@ -22,7 +22,7 @@ for filename in os.listdir(csv_directory):
 
             # Check if the 'Content' column exists in the current CSV
             if 'Content' in df.columns:
-                # Select only the 'Content' column
+                # Select only the 'Content' column, dropping any NaN entries
                 df_content = df[['Content']].dropna()
 
                 # Append the 'Content' column data to the 'DataBase' table
