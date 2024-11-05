@@ -1,4 +1,4 @@
-# Admission Chatbot for Mapúa Malayan Colleges
+# Admission Chatbot for Mapúa Malayan Colleges Mindanao
 
 Welcome to the repository for our Admission Chatbot project, developed as part of our CS121 course, Programming Languages. This web-hosted GUI application is designed to assist prospective students with their admission queries and provide a user-friendly experience.
 
