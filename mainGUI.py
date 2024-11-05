@@ -60,7 +60,7 @@ def contains_keywords(user_input, keywords):
 # Use the Gemini API to generate a response based on the database content and user input
 def query_gemini_api(db_path, user_input):
     # Gives out the tone the bot should respond
-    #tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
+    tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
     
     # Extracting the content from the database
     db_content = extract_raw_data_from_db(db_path)
@@ -74,7 +74,7 @@ def query_gemini_api(db_path, user_input):
 
     # If input matches accepted keywords || RULES
     if contains_keywords(user_input, ACCEPTED_KEYWORDS):
-        response = model.generate_content([f" Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
+        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
     
     # If user is saying goodbye
     elif contains_keywords(user_input, GOODBYE_KEYWORDS):
@@ -91,7 +91,7 @@ def query_gemini_api(db_path, user_input):
 
     # For general queries
     else:
-        response = model.generate_content([f". Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
+        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
 
     # Extract the response text
     response = response.text
