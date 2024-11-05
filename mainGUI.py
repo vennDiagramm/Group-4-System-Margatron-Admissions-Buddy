@@ -121,7 +121,7 @@ def handle_conversation(db_path):
         st.session_state.messages.append({"role": "user", "content": user_input}) 
 
         # Display user message in chat message container
-        with st.chat_message("user", avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/student.ico'):  # we can change this. this is the icon for the human
+        with st.chat_message("user", avatar = 'https://raw.githubusercontent.com/vennDiagramm/admissionBot/refs/heads/main/Icons/student.ico'):  # icon for the human
             st.markdown(user_input)
 
         # Query the Gemini API with the user input

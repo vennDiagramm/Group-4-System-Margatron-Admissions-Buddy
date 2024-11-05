@@ -2,8 +2,6 @@ from langdetect import detect, DetectorFactory
 import re
 from nltk.corpus import words
 
-
-
 class InputChecker:
     def __init__(self):
         self.valid_words = set(words.words())  # Load valid words
@@ -38,7 +36,6 @@ class InputChecker:
             pass  # Handle cases where detection fails
 
         return False
-
 
     # Checking if math ba siya
     def is_mathematical_expression(self, user_input):
