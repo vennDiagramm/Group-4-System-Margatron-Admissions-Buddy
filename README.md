@@ -75,3 +75,5 @@ Since our GitHub repository is public:
   ```
   API_KEY = "your-api-key"
   ```
+
+### Contributors
