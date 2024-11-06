@@ -78,8 +78,8 @@ Since our GitHub repository is public:
 
 ### Contributors
 
-- **<span style="color:#FF6347">Marga Pilapil</span>** - [vennDiagramm](https://github.com/vennDiagramm)
-- **<span style="color:#4682B4">Jhouvann Morden</span>** - [dlGuiri](https://github.com/Joooban)
-- **<span style="color:#32CD32">Darwin Guirigay</span>** - [Joooban](https://github.com/dlGuiri)
-- **<span style="color:#8A2BE2">Mel Macabenta</span>** - [Lumeru](https://github.com/MeruMeru09)
-- **<span style="color:#FFD700">Gavin Rivera</span>** - [Watta2xTops](https://github.com/Watta2xTops)
+- **<span style="color:#1E90FF">Marga Pilapil</span>** ![vennDiagramm](https://img.shields.io/badge/vennDiagramm-contributor-blue) - [GitHub](https://github.com/vennDiagramm)
+- **<span style="color:#1E90FF">Jhouvann Morden</span>** ![dlGuiri](https://img.shields.io/badge/dlGuiri-contributor-blue) - [GitHub](https://github.com/Joooban)
+- **<span style="color:#1E90FF">Darwin Guirigay</span>** ![Joooban](https://img.shields.io/badge/Joooban-contributor-blue) - [GitHub](https://github.com/dlGuiri)
+- **<span style="color:#1E90FF">Mel Macabenta</span>** ![Lumeru](https://img.shields.io/badge/Lumeru-contributor-blue) - [GitHub](https://github.com/MeruMeru09)
+- **<span style="color:#1E90FF">Gavin Rivera</span>** ![Watta2xTops](https://img.shields.io/badge/Watta2xTops-contributor-blue) - [GitHub](https://github.com/Watta2xTops)
