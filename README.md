@@ -23,9 +23,10 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
    python -m venv nameofENV
    ```
    Example: ``python -m venv AdBot``
+   Conda: ``conda create --name myenv`` | Specify Python version: ``conda create --name myenv python=3.9``
 
 
-2. **Activate the Virtual Environment**:
+3. **Activate the Virtual Environment**:
    - **Windows**:
      ```bash
      AdBot\Scripts\activate
@@ -35,13 +36,13 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      source AdBot/bin/activate
      ```
 
-   - **If using Conda**:
-      - Create a Conda environment: ``conda create --name myenv``
-      - Specify Python version: ``conda create --name myenv python=3.9``
-      - **Activate Conda Environment**: ``conda activate myenv``
+   - **Conda**:
+     ```bash
+     conda activate myenv
+     ```
 
 
-3. **Environment Variables**
+4. **Environment Variables**
    - Create a `.env` file.
    - Add your API key:
      ```bash
@@ -49,7 +50,7 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      ```
 
 
-4. **Install the required packages:**
+5. **Install the required packages:**
    - **Type in the terminal after activating environment**:
       ```bash
       pip install google-generativeai streamlit python-dotenv langdetect nltk
