@@ -9,7 +9,7 @@ import streamlit as st
 from dotenv import load_dotenv  # comment out if directly using API_KEY from command line
 
 # to deal with nonsense inputs
-import nonesenseChecking as nc
+import src.nonesenseChecking as nc
 import re
 
 # for streamlit -- because mawala sa iyaha si words
@@ -146,7 +146,7 @@ def main():
     st.write("Hello, how may I help you?")
 
     # Provide the path to your database file here
-    db_path = "database/databasefinalnjud.db"  # This is the SQLite database path
+    db_path = "\\database/databasefinalnjud.db"  # This is the SQLite database path
     handle_conversation(db_path)
 
 
