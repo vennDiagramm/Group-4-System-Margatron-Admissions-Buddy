@@ -78,8 +78,8 @@ Since our GitHub repository is public:
 
 ### Contributors
 
-- **[Marga Pilapil]** - [GitHub Profile](https://github.com/vennDiagramm)
-- **[Jhouvann Morden]** - [GitHub Profile](https://github.com/Joooban)
-- **[Darwin Guirigay]** - [GitHub Profile](https://github.com/dlGuiri)
-- **[Mel Macabenta]** - [GitHub Profile](https://github.com/MeruMeru09)
-- **[Gavin Rivera]** - [GitHub Profile](https://github.com/Watta2xTops)
+- **<span style="color:#FF6347">Marga Pilapil</span>** - [vennDiagramm](https://github.com/vennDiagramm)
+- **<span style="color:#4682B4">Jhouvann Morden</span>** - [dlGuiri](https://github.com/Joooban)
+- **<span style="color:#32CD32">Darwin Guirigay</span>** - [Joooban](https://github.com/dlGuiri)
+- **<span style="color:#8A2BE2">Mel Macabenta</span>** - [Lumeru](https://github.com/MeruMeru09)
+- **<span style="color:#FFD700">Gavin Rivera</span>** - [Watta2xTops](https://github.com/Watta2xTops)
