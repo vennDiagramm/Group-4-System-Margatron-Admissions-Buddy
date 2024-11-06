@@ -23,7 +23,10 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
    python -m venv nameofENV
    ```
    Example: ``python -m venv AdBot``
-   Conda: ``conda create --name myenv`` | Specify Python version: ``conda create --name myenv python=3.9``
+   
+   Conda: ``conda create --name myenv``
+   
+   Specify Python version: ``conda create --name myenv python=3.9``
 
 
 3. **Activate the Virtual Environment**:
