@@ -9,7 +9,7 @@ import streamlit as st
 from dotenv import load_dotenv  # comment out if directly using API_KEY from command line
 
 # to deal with nonsense inputs
-import src.nonesenseChecking as nc
+import nonesenseChecking as nc
 import re
 
 # for streamlit -- because mawala sa iyaha si words
