@@ -53,9 +53,9 @@ def extract_raw_data_from_db(db_path):
 
 # Check if user input contains any keywords
 def contains_keywords(user_input, keywords):
-        user_input = input_checker.remove_punctuation(user_input.lower())
-        user_words = set(user_input.split())
-        return bool(user_words.intersection(keywords))
+    user_input = input_checker.remove_punctuation(user_input.lower())
+    user_words = set(user_input.split())
+    return bool(user_words.intersection(keywords))
 
 
 # Use the Gemini API to generate a response based on the database content and user input
