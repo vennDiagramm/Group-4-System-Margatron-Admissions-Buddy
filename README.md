@@ -40,13 +40,15 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
    - Specify Python version: ``conda create --name myenv python=3.9``
    - **Activate Conda Environment**: ``conda activate myenv``
 
+
 3. **Environment Variables**
    - Create a `.env` file.
    - Add your API key:
      ```bash
      API_KEY = "your-api-key"
      ```
-   
+
+
 4. **Install the required packages:**
    - **Type in the terminal after activating environment**:
       ```bash
@@ -56,7 +58,7 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
       ```bash
       python --version
       ```
-   Example Output: `Python 3.12`
+      Example Output: `Python 3.12`
 
 
 ### Contributors
