@@ -47,7 +47,10 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      conda create --name myenv python=3.9
      ```
 
-   - **Activate Conda Environment**: ``` conda activate myenv ```
+   - **Activate Conda Environment**:
+     ```bash
+     conda activate myenv
+     ```
 
 ### Needed to Do in the Terminal
 
