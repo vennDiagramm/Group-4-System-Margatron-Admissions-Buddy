@@ -77,4 +77,9 @@ Since our GitHub repository is public:
   ```
 
 ### Contributors
-[![All Contributors](https://img.shields.io/github/all-contributors/vennDiagramm/admissionBot?color=ee8449&style=flat-square)](#contributors)
+
+- **[Marga Pilapil]** - [GitHub Profile](https://github.com/vennDiagramm)
+- **[Jhouvann Morden]** - [GitHub Profile](https://github.com/Joooban)
+- **[Darwin Guirigay]** - [GitHub Profile](https://github.com/dlGuiri)
+- **[Mel Macabenta]** - [GitHub Profile](https://github.com/MeruMeru09)
+- **[Gavin Rivera]** - [GitHub Profile](https://github.com/Watta2xTops)
