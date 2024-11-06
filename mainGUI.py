@@ -72,13 +72,13 @@ def query_gemini_api(db_path, user_input):
     # Clean the user input
     user_input = user_input.strip().lower()
 
-    # If user is saying goodbye
-    if contains_keywords(user_input, GOODBYE_KEYWORDS):
-        return "You are very much welcome! I am glad I could help!"
-    
     # If input matches accepted keywords
-    elif contains_keywords(user_input, ACCEPTED_KEYWORDS):
-        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
+    if contains_keywords(user_input, ACCEPTED_KEYWORDS):
+        response = model.generate_content([f"{tone}. Give me an answer based on this query: {user_input} and this data. Limit up to 500 words", db_content])
+    
+    # If user is saying goodbye
+    elif contains_keywords(user_input, GOODBYE_KEYWORDS):
+        return "You are very much welcome! I am glad I could help!"
     
     # If user is greeting the bot
     elif contains_keywords(user_input, GREETING_KEYWORDS) and len(user_input) <= 17:
