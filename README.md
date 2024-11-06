@@ -51,35 +51,30 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      ```bash
      conda activate myenv
      ```
-
-### Needed to Do in the Terminal
-
-Install the required packages:
-```bash
-pip install google-generativeai streamlit python-dotenv langdetect nltk
-```
-
-### Version Needed
-
-Make sure you have Python version 3.9 or higher:
-```bash
-python --version
-```
-Example output: `Python 3.12`
-
-### Environment Variables
-
-Since our GitHub repository is public:
+     
+3. **Environment Variables**
 - Create a `.env` file.
 - Add your API key:
   ```
   API_KEY = "your-api-key"
   ```
 
+4. **Install the required packages:**
+- **Type in the terminal after activating environment**:
+```bash
+pip install google-generativeai streamlit python-dotenv langdetect nltk
+```
+- **Version Needed**: Python 3.9 or higher
+```bash
+python --version
+```
+Example Output: `Python 3.12`
+
+
 ### Contributors
 
-- **<span style="color:#1E90FF">Marga Pilapil</span>** ![vennDiagramm](https://img.shields.io/badge/vennDiagramm-contributor-blue) - [GitHub](https://github.com/vennDiagramm)
-- **<span style="color:#1E90FF">Jhouvann Morden</span>** ![dlGuiri](https://img.shields.io/badge/dlGuiri-contributor-blue) - [GitHub](https://github.com/Joooban)
-- **<span style="color:#1E90FF">Darwin Guirigay</span>** ![Joooban](https://img.shields.io/badge/Joooban-contributor-blue) - [GitHub](https://github.com/dlGuiri)
-- **<span style="color:#1E90FF">Mel Macabenta</span>** ![Lumeru](https://img.shields.io/badge/Lumeru-contributor-blue) - [GitHub](https://github.com/MeruMeru09)
-- **<span style="color:#1E90FF">Gavin Rivera</span>** ![Watta2xTops](https://img.shields.io/badge/Watta2xTops-contributor-blue) - [GitHub](https://github.com/Watta2xTops)
+- **<span style="color:#FF6347">Marga Pilapil</span>** - [vennDiagramm](https://github.com/vennDiagramm)
+- **<span style="color:#4682B4">Jhouvann Morden</span>** - [dlGuiri](https://github.com/Joooban)
+- **<span style="color:#32CD32">Darwin Guirigay</span>** - [Joooban](https://github.com/dlGuiri)
+- **<span style="color:#8A2BE2">Mel Macabenta</span>** - [Lumeru](https://github.com/MeruMeru09)
+- **<span style="color:#FFD700">Gavin Rivera</span>** - [Watta2xTops](https://github.com/Watta2xTops)
