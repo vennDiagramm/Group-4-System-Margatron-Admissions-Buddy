@@ -61,7 +61,7 @@ def contains_keywords(user_input, keywords):
 # Use the Gemini API to generate a response based on the database content and user input
 def query_gemini_api(db_path, user_input):
     # Gives out the tone the bot should respond
-    tone = "Respond formally and professionally, providing only the requested information. Ensure the answer is clear and relevant to the query, without including any HTML tags and mentioning how the information was obtained. Provide links if needed."
+    tone = "Respond formally and professionally, providing only the requested information. Provide links if needed."
     
     # Extracting the content from the database
     db_content = extract_raw_data_from_db(db_path)
