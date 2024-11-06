@@ -67,7 +67,7 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
 ## Contributors
 
 - **<span style="color:#FF6347">Marga Pilapil</span>** - [vennDiagramm](https://github.com/vennDiagramm)
-- **<span style="color:#4682B4">Jhouvann Morden</span>** - [dlGuiri](https://github.com/Joooban)
-- **<span style="color:#32CD32">Darwin Guirigay</span>** - [Joooban](https://github.com/dlGuiri)
+- **<span style="color:#4682B4">Jhouvann Morden</span>** - [Joooban](https://github.com/dlGuiri)
+- **<span style="color:#32CD32">Darwin Guirigay</span>** - [dlGuiri](https://github.com/Joooban)
 - **<span style="color:#8A2BE2">Mel Macabenta</span>** - [Lumeru](https://github.com/MeruMeru09)
 - **<span style="color:#FFD700">Gavin Rivera</span>** - [Watta2xTops](https://github.com/Watta2xTops)
