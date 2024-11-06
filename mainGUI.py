@@ -32,7 +32,8 @@ input_checker = nc.InputChecker()
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
 ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
                      "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
-                     "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college"]
+                     "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college", 
+                     "senior high school", "junior high school"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell", "thanks", "ty", "thank", "bye"]
 
 # Connect to SQLite database and fetch the raw data
