@@ -45,7 +45,7 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      ```
 
 
-4. **Environment Variables**
+### **Environment Variables**
    - Create a `.env` file.
    - Add your API key:
      ```bash
@@ -53,7 +53,7 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      ```
 
 
-5. **Install the required packages:**
+### **Install the required packages:**
    - **Type in the terminal after activating environment**:
       ```bash
       pip install google-generativeai streamlit python-dotenv langdetect nltk
