@@ -51,15 +51,17 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      ```bash
      conda activate myenv
      ```
-
 3. **Environment Variables**
    - Create a `.env` file.
    - Add your API key:
      ```bash
      API_KEY = "your-api-key"
      ```
+   
 
-4. **Install the required packages:**
+5. 
+
+6. **Install the required packages:**
    - **Type in the terminal after activating environment**:
       ```bash
       pip install google-generativeai streamlit python-dotenv langdetect nltk
