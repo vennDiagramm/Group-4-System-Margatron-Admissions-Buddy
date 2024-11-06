@@ -35,10 +35,10 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      source AdBot/bin/activate
      ```
 
-   **If using Conda**:
-   - Create a Conda environment: ``conda create --name myenv``
-   - Specify Python version: ``conda create --name myenv python=3.9``
-   - **Activate Conda Environment**: ``conda activate myenv``
+   - **If using Conda**:
+      - Create a Conda environment: ``conda create --name myenv``
+      - Specify Python version: ``conda create --name myenv python=3.9``
+      - **Activate Conda Environment**: ``conda activate myenv``
 
 
 3. **Environment Variables**
