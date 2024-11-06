@@ -67,7 +67,7 @@ def query_gemini_api(db_path, user_input):
     db_content = extract_raw_data_from_db(db_path)
 
     # Load the Gemini model # gemini-1.5-flash / models/gemini-1.5-pro / models/gemini-1.0-pro
-    model = genai.GenerativeModel("models/gemini-1.5-flash")
+    model = genai.GenerativeModel("models/gemini-1.5-flash-8b")
 
     # Clean the user input
     user_input = user_input.strip().lower()
