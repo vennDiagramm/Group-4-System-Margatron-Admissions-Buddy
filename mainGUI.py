@@ -74,7 +74,7 @@ def query_gemini_api(db_path, user_input):
 
     # If input matches accepted keywords
     if contains_keywords(user_input, ACCEPTED_KEYWORDS):
-        response = model.generate_content([f"{tone}. Give me an answer based on this,  and the query: {user_input}. Limit up to 500 words", db_content])
+        response = model.generate_content([f"{tone}. Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
     
     # If user is saying goodbye
     elif contains_keywords(user_input, GOODBYE_KEYWORDS):
@@ -91,7 +91,7 @@ def query_gemini_api(db_path, user_input):
 
     # For general queries
     else:
-        response = model.generate_content([f"{tone}. Search from and Give me an answer based on this, and the query: {user_input}. Limit up to 500 words", db_content])
+        response = model.generate_content([f"{tone}. Search from and Give me an answer based on this data and the query: {user_input}. Limit up to 500 words", db_content])
 
     # Extract the response text
     response = response.text
