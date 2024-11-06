@@ -1,3 +1,4 @@
+
 # Admission Chatbot for Mapúa Malayan Colleges Mindanao
 
 Welcome to the repository for our Admission Chatbot project, developed as part of our CS121 course, Programming Languages. This web-hosted GUI application is designed to assist prospective students with their admission queries and provide a user-friendly experience.
@@ -30,7 +31,7 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
 2. **Activate the Virtual Environment**:
    - **Windows**:
      ```bash
-     AdBot\Scripts\activate
+     AdBot\Scripts ctivate
      ```
    - **Linux/Mac**:
      ```bash
@@ -42,7 +43,7 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      ```bash
      conda create --name myenv
      ```
-   - Specify Python version: 
+   - Specify Python version:
      ```bash
      conda create --name myenv python=3.9
      ```
@@ -51,25 +52,28 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
      ```bash
      conda activate myenv
      ```
-     
-3. **Environment Variables**
-- Create a `.env` file.
-- Add your API key:
-  ```
-  API_KEY = "your-api-key"
-  ```
 
-4. **Install the required packages:**
-- **Type in the terminal after activating environment**:
-```bash
-pip install google-generativeai streamlit python-dotenv langdetect nltk
-```
-- **Version Needed**: Python 3.9 or higher
-```bash
-python --version
-```
-Example Output: `Python 3.12`
+3. **Environment Variables**:
+   - Create a `.env` file.
+   - Add your API key:
+     ```
+     API_KEY = "your-api-key"
+     ```
 
+4. **Install the required packages**:
+   - **Type in the terminal after activating environment**:
+   ```bash
+   pip install google-generativeai streamlit python-dotenv langdetect nltk
+   ```
+
+5. **Check Python Version**:
+   - **Version Needed**: Python 3.9 or higher
+   ```bash
+   python --version
+   ```
+   Example Output: `Python 3.12`
+
+---
 
 ### Contributors
 
