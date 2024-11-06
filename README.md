@@ -73,5 +73,5 @@ Since our GitHub repository is public:
 - Create a `.env` file.
 - Add your API key:
   ```
-  API_KEY="your-api-key"
+  API_KEY = "your-api-key"
   ```
