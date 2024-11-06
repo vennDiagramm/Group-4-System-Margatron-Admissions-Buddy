@@ -60,8 +60,7 @@ Welcome to the repository for our Admission Chatbot project, developed as part o
       ```
       Example Output: `Python 3.12`
 
-
-### Contributors
+## Contributors
 
 - **<span style="color:#FF6347">Marga Pilapil</span>** - [vennDiagramm](https://github.com/vennDiagramm)
 - **<span style="color:#4682B4">Jhouvann Morden</span>** - [dlGuiri](https://github.com/Joooban)
