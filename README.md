@@ -77,4 +77,4 @@ Since our GitHub repository is public:
   ```
 
 ### Contributors
-[![All Contributors](https://img.shields.io/github/all-contributors/vennDiagramm/admissionBot?color=ee8449&style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/github/all-contributors/ven/admissionBot?color=ee8449&style=flat-square)](#contributors)
