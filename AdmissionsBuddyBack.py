@@ -136,20 +136,3 @@ def handle_conversation(db_path):
 
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "content": result})
-
-
-# Function to handle GUI
-def main():
-    # Streamlit set up
-    st.set_page_config(page_title="Margatron", page_icon="Icons/mapua_icon_83e_icon.ico")  # pwde nato e himo as mmcm logo
-    st.title("Margatron, Admissions Buddy :books:")
-    st.write("Hello, how may I help you?")
-
-    # Provide the path to your database file here
-    db_path = "database/databasefinalnjud.db"  # This is the SQLite database path
-    handle_conversation(db_path)
-
-
-# To run main   
-if __name__ == "__main__":
-    main()
