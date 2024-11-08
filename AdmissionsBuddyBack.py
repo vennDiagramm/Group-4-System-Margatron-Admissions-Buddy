@@ -26,7 +26,7 @@ genai.configure(api_key=api_key)
 # Create an instance of InputChecker
 input_checker = nc.InputChecker()
 
-# Keywords for conversation || FACTS
+# Keywords for conversation || FACTS - Lists
 GREETING_KEYWORDS = ["hi", "hello", "hey", "greetings", "whats up", "what's up", "yo", "how are you", "how are you doing"]
 ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition fees", "enroll", "school year", "scholarships", 
                      "apply", "enrollment", "application", "pay", "departments", "colleges", "shs", "jhs", "college programs", 
