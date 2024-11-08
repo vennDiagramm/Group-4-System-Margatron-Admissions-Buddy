@@ -2,9 +2,10 @@ from langdetect import detect, DetectorFactory
 import re
 from nltk.corpus import words
 
-# for streamlit -- because mawala sa iyaha si words
+# for streamlit -- because mawala sa iyaha si words | web hosting purposes
 import nltk
 nltk.download('words')
+
 
 class InputChecker:
     def __init__(self):
@@ -41,11 +42,13 @@ class InputChecker:
 
         return False
 
+
     # Checking if math ba siya
     def is_mathematical_expression(self, user_input):
         # Check if the input is a mathematical expression
         return re.match(r'^[\d\s\+\-\*\/\%\(\)]+$', user_input.strip()) is not None
     
+
     # Remove punctuations
     def remove_punctuation(self, text):  # removes punctuations
         return re.sub(r'[^\w\s]', '', text)

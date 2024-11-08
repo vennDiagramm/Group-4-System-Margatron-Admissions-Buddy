@@ -1,11 +1,11 @@
-import sqlite3  # for database
+ # for database and api
+import sqlite3 
 import google.generativeai as genai
 import os
-from pathlib import Path
 
 # to deal with gui and secret keys
 import streamlit as st
-from dotenv import load_dotenv  # comment out if directly using API_KEY from command line
+from dotenv import load_dotenv
 
 # to deal with nonsense inputs
 import nonesenseChecking as nc
@@ -33,6 +33,7 @@ ACCEPTED_KEYWORDS = ["payment methods", "admissions", "requirements", "tuition f
                      "courses", "junior high school", "senior high school", "ccis", "cea","atycb","cas","chs", "college", 
                      "senior high school", "junior high school","mmcm","mcm"]
 GOODBYE_KEYWORDS = ["thank you", "goodbye", "farewell", "thanks", "ty", "thank", "bye"]
+
 
 # Connect to SQLite database and fetch the raw data
 def extract_raw_data_from_db(db_path):
