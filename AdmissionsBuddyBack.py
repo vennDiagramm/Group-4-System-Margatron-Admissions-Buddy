@@ -1,4 +1,4 @@
- # for database and api
+# for database and api
 import sqlite3 
 import google.generativeai as genai
 import os
