@@ -1,4 +1,3 @@
-import csv
 import sqlite3  # for database
 import google.generativeai as genai
 import os
@@ -10,7 +9,6 @@ from dotenv import load_dotenv  # comment out if directly using API_KEY from com
 
 # to deal with nonsense inputs
 import nonesenseChecking as nc
-import re
 
 # for streamlit -- because mawala sa iyaha si words
 import nltk
